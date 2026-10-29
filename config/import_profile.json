@@ -1,0 +1,12 @@
+{
+  "_comment": "Declares which source fields carry which meaning. A field set to null is NOT populated: V2 never substitutes ingestion or platform-arrival dates for the original release date.",
+  "content_type": {
+    "source": "gcs_path_segment",
+    "segments": {"MOVIES": "movie", "SHOWS": "show", "ORIGINALS": "original"},
+    "field": null
+  },
+  "original_release_date": {"field": null},
+  "original_release_year": {"field": null},
+  "platform_release_date": {"field": "cms_metadata.zee5_release_date"},
+  "directors": {"field": null}
+}

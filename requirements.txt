@@ -1,0 +1,11 @@
+# Runtime. Python 3.11+ (developed and tested on 3.13).
+fastapi==0.162.0
+uvicorn==0.54.0
+pydantic>=2.6
+psycopg[binary]==3.3.6
+psycopg-pool==3.3.3
+numpy>=1.26
+onnxruntime>=1.17                # CPU embedding (and the optional reranker)
+tokenizers>=0.15
+python-dotenv>=1.0
+google-cloud-storage>=2.14       # only for video playback from private GCS buckets (app/video.py)

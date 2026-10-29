@@ -1,0 +1,32 @@
+# Local environments, configuration, credentials and generated files
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!config/.env.example
+config/calibration*.json
+models/
+runtime/
+data/
+downloads/
+*.log
+*.pem
+*.key
+.DS_Store
+.vscode/
+.idea/
+# Development-only material is deliberately excluded from this deployment repository
+tests/
+eval/
+.pytest_cache/
+pytest.ini
+requirements-dev.txt
+CLAUDE.md
+claude.md
+chatgpt.md
+CHATGPT.md
+gpt.md
+GPT.md
+FIX_VERIFICATION.md

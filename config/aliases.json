@@ -1,0 +1,5 @@
+{
+  "_comment": "Registered title aliases. Keys are exact catalog titles; values are alternative names that should resolve automatically. Example: {\"Raktha Vajram\": [\"Rakta Vajram\"]}",
+  "Raktha Vajram": ["Rakta Vajram"],
+  "Kaattu Pey": ["Kaadu Pey"]
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Text Search V2</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="eyebrow">TEXT SEARCH V2 · LOCAL</div>
+      <h1>Find the movie. Find the moment.</h1>
+      <p>Titles, cast, genres, storylines, dialogue and scene descriptions. Filters such as language, genre,
+         "not ...", years and "top 5" are understood.</p>
+    </header>
+
+    <form id="search-form" class="search-form" autocomplete="off">
+      <label class="sr-only" for="query">Search the catalog</label>
+      <input id="query" name="query" type="search" maxlength="500" autofocus
+        placeholder='Try: tamil horror movies, or scene where he says "I will return"' required />
+      <button type="submit">Search</button>
+    </form>
+    <div class="examples" aria-label="Example searches">
+      <span>Try</span>
+      <button type="button" data-query="Raktha Vajram">Raktha Vajram</button>
+      <button type="button" data-query="kattu pey">kattu pey (typo)</button>
+      <button type="button" data-query="tamil horror movies">tamil horror movies</button>
+      <button type="button" data-query="movies like Raktha Vajram">movies like Raktha Vajram</button>
+      <button type="button" data-query="scene where he says &quot;I will return&quot;">quoted dialogue</button>
+      <button type="button" data-query="undercover cop infiltrates a gang to stop a diamond heist">storyline</button>
+    </div>
+
+    <div id="status" class="status" role="status" aria-live="polite">Type a query and press Enter.</div>
+    <div id="chips" class="chips" aria-label="How the query was understood"></div>
+    <ul id="notes" class="notes"></ul>
+    <section id="clarify" class="clarify" hidden></section>
+    <section id="preview" class="preview" hidden></section>
+    <section id="results" class="results" aria-label="Search results"></section>
+  </main>
+
+  <dialog id="player-dialog" class="player-dialog" aria-label="Scene player">
+    <div class="player-head">
+      <div><strong id="player-title"></strong> <span id="player-time"></span></div>
+      <button id="player-close" type="button" aria-label="Close player">×</button>
+    </div>
+    <video id="player" controls preload="metadata" playsinline></video>
+    <p id="player-message" class="player-message"></p>
+  </dialog>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>
