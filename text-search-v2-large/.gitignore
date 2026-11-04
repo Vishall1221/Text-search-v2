@@ -1,0 +1,19 @@
+.venv/
+.venv-large/
+__pycache__/
+*.pyc
+.pytest_cache/
+config/.env
+config/calibration*.json
+models/
+runtime/
+data/
+*.log
+
+# Include this project's focused/regression tests despite the parent's runtime exclusions.
+!tests/
+!tests/*.py
+!tests/*.cjs
+!pytest.ini
+!requirements-dev.txt
+!config/.env.example

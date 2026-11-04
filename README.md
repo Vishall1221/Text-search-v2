@@ -12,6 +12,13 @@ are excluded.
 **Already running V1 on a Mac? Follow [MAC.md](MAC.md).** Reuse the existing PostgreSQL server and
 database; V2 manages its own `search_v2` schema and does not modify V1's original tables.
 
+**For the integrated catalog-only application**, use
+**[text-search-v2-large/](text-search-v2-large/README.md)** and its
+[Mac guide](text-search-v2-large/MAC.md). It reads the existing `schema_v2_large`
+catalog, supports actor aliases, available audio languages, genre/theme synonyms
+and plot search, and serves a separate UI/API on port **8002**. Original V2 stays
+separate. Enter that subfolder before installing dependencies or starting it.
+
 ## Catalog-only JSON import: schema_v2_large
 
 For approximately 2,000 movie metadata records without scenes or transcripts, see

@@ -1,0 +1,35 @@
+{
+  "genres": {
+    "family": ["family", "family drama", "family oriented"],
+    "comedy": ["comedy", "comedies", "comic", "comedic", "funny", "humorous", "humour", "humor"],
+    "romance": ["romance", "romantic", "romances", "rom", "love story"],
+    "thriller": ["thriller", "thrillers", "suspense", "suspenseful"],
+    "horror": ["horror", "horrors", "scary", "spooky", "haunted"],
+    "science fiction": ["scifi", "sci fi", "science fiction"],
+    "documentary": ["documentary", "documentaries", "docu"],
+    "animation": ["animation", "animated", "cartoon", "cartoons"],
+    "biography": ["biography", "biographical", "biopic", "biopics"],
+    "action": ["action", "actions", "action packed"],
+    "mystery": ["mystery", "mysteries", "whodunit", "whodunnit"],
+    "adventure": ["adventure", "adventures"],
+    "crime": ["crime", "crimes"],
+    "drama": ["drama", "dramas"]
+  },
+  "preferences": [
+    {"name":"family", "aliases":["family","family oriented"], "hints":["family","relationships","reconciliation"], "text":"a story about family relationships and reconciliation"},
+    {"name":"feel good", "aliases":["feel good","feelgood","heartwarming","uplifting","heart warming","comfort watch"], "hints":["hope","happiness","joy"], "text":"an uplifting heartwarming story of hope and happiness"},
+    {"name":"lighthearted", "aliases":["lighthearted","light hearted","light watch","easy watch"], "hints":["humor","comedy","joy"], "text":"a lighthearted humorous story"},
+    {"name":"emotional", "aliases":["emotional","tearjerker","tear jerker","moving story","touching story"], "hints":["grief","loss","love"], "text":"an emotional touching story of love and loss"},
+    {"name":"friendship", "aliases":["friendship","friends bonding","bromance"], "hints":["friendship","loyalty","companionship"], "text":"a story about friendship loyalty and companionship"},
+    {"name":"revenge", "aliases":["revenge","vengeance","getting even","get even"], "hints":["revenge","vengeance","retribution"], "text":"a story about revenge after betrayal"},
+    {"name":"inspirational", "aliases":["inspirational","inspiring","motivational","underdog story"], "hints":["perseverance","courage","triumph"], "text":"an inspiring underdog story of perseverance and courage"}
+  ],
+  "lexical": [
+    ["kidnap","kidnapped","kidnapping","abduct","abducted","abduction"],
+    ["revenge","vengeance","retribution"],
+    ["heist","robbery","robberies"],
+    ["betrayal","betrayed","treachery"],
+    ["friendship","companionship"],
+    ["heartwarming","uplifting","feelgood"]
+  ]
+}
