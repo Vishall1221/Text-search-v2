@@ -58,7 +58,10 @@ the current catalog. Metadata serving uses only SELECTs/read-only transactions.
 
 ## Title priority
 
-A complete title wins first. For a concise title/listing request, contiguous
+A bare or play request favors the complete title. A filmography-style `NAME movies`
+request with actor evidence favors the actor; explicit actor/director/character/title
+cues select that relationship. Actor, director and character matches are never
+unioned as interchangeable credits. For a concise title request, contiguous
 whole-word fragments of a title also count as title candidates, ahead of an
 incidental character or cast-name match. A word-to-title posting index is built
 from the active catalog; requests intersect those postings rather than scanning
@@ -71,6 +74,13 @@ person name below a competing partial title. If several titles match, they remai
 alternatives rather than selecting an arbitrary winner. Debug traces record the
 selected title-fragment match. Pull this code and restart; no data reimport,
 title rename or embedding rebuild is required for this priority correction.
+
+See [CORRECTNESS_REPORT.md](CORRECTNESS_REPORT.md) for the later full investigation,
+before/after API evidence, contextual alias/typo fixes, listing order and lexical
+relaxation changes. Unsupported short queries with no lexical evidence now ask for
+more detail instead of returning uncalibrated semantic neighbors. Detailed plot
+and mood discovery remains available; semantic relevance still needs real-catalog
+labels and calibration.
 
 ## Language and date semantics
 

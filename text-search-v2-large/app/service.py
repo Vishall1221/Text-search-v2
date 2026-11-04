@@ -17,7 +17,8 @@ from app.gazetteer import AssetInfo, Catalog
 from app.lexical import main_query, stages
 from app.planner import Plan, plan_query
 from app.rerank import CrossEncoder
-from app.text import scrub_pii
+from app.text import normalize, scrub_pii
+from app.vocab import FUNCTION_WORDS, NOISE, CONTENT_TYPE_WORDS
 from config.settings import settings
 log=logging.getLogger('service')
 LEX_TIMEOUT_MS=450
@@ -110,7 +111,7 @@ class SearchService:
         try:
             if plan.mode in {'title','browse'}:
                 keys = plan.allowed if plan.allowed is not None else cat.assets
-                assets = [AssetResult(k) for k in sorted(keys,key=lambda k:(cat.assets[k].title_norm,k))]
+                assets = [AssetResult(k) for k in sorted(keys,key=lambda k:self._listing_key(plan,cat,k))]
             elif plan.mode == 'similar':
                 assets = await deadline.run(self._similar(plan,cat,resp))
             else:
@@ -141,6 +142,11 @@ class SearchService:
             resp['notes'].append('These results are supported by semantic similarity only; no lexical match was found.')
         if resp['degraded']:
             resp.update(status='degraded',message='Some components were unavailable; results may be incomplete.')
+        elif resp.pop('_unsupported_short',False):
+            resp.update(status='needs_clarification',
+                message='No title or keyword evidence supports this short query. Add a title, person name or more plot detail.',
+                clarification=dict(reason='unsupported_short_query',
+                    suggestions=[],message='Add a title, person name or more plot detail.'))
         elif not assets:
             resp.update(status='empty',message='No matching movies found.')
         elif plan.approximate:
@@ -176,11 +182,17 @@ class SearchService:
         methods=variant[1]
         async def lexical():
             hits=[]
+            seen=set()
             for name,tsq in stages(plan.terms,settings.lex_relax):
                 q=main_query(generation=cat.generation['generation_id'],tsquery=tsq,window=settings.candidate_window,
                              allowed=sorted(plan.allowed) if plan.allowed is not None else None)
                 rows=await self._fetch(q.sql,q.params,450)
-                hits=[Hit(r['asset_key'],None,r['score']) for r in rows]
+                # Relaxation broadens recall; it must not demote a document that
+                # satisfied every query term below a weaker one-term match.
+                for row in rows:
+                    if row['asset_key'] not in seen:
+                        hits.append(Hit(row['asset_key'],None,row['score']))
+                        seen.add(row['asset_key'])
                 if len(hits)>=settings.lex_min_candidates:
                     break
             return hits
@@ -216,6 +228,14 @@ class SearchService:
             else:
                 hits[name]=task.result()
         resp['_semantic_only']=not hits.get('catalog_lex') and bool(hits.get('catalog_dense'))
+        meaningful = set(normalize(plan.dense_text or ' '.join(plan.terms)).split()) - FUNCTION_WORDS - NOISE - set(CONTENT_TYPE_WORDS)
+        if (methods is None and resp['_semantic_only'] and not plan.has_filters()
+                and len(meaningful) <= 1 and self.threshold_for(cat) is None):
+            # An uncalibrated nearest neighbor is not evidence for a short,
+            # unsupported lookup. Descriptive/mood discovery still uses dense.
+            resp['_unsupported_short'] = True
+            resp['_semantic_only'] = False
+            return []
         return fuse(hits,dict(catalog_lex=settings.lexical_weight,catalog_dense=settings.semantic_weight),set(),
                     k=settings.rrf_k,window=settings.candidate_window)
     def __init__(self, embedder: Embedder | None, reranker: CrossEncoder | None = None) -> None:
@@ -374,6 +394,36 @@ class SearchService:
                                                  -(cat.assets[a.asset_key].platform_release_date or date.min).toordinal(),
                                                  -a.score, a.asset_key))
         return assets
+
+    def _listing_key(self, plan: Plan, cat: Catalog, asset_key: str) -> tuple:
+        """Rank deterministic entity listings by their requested relationship.
+
+        Eligibility belongs to the planner. These tie-breaks never admit another
+        movie, and explicit date sorting is applied afterward by _apply_sort().
+        """
+        asset = cat.assets[asset_key]
+        positive = [f for f in plan.facets if not f.negated]
+        title_facets = [f for f in positive if f.kind == 'title']
+        if title_facets:
+            title_words = asset.title_norm.split()
+            evidence = []
+            for facet in title_facets:
+                words = normalize(facet.surface).split()
+                if not words:
+                    continue
+                for start in range(len(title_words)-len(words)+1):
+                    if title_words[start:start+len(words)] == words:
+                        evidence.append((start,len(title_words)-len(words)))
+            position,extra = min(evidence,default=(0,0))
+            return (position,extra,asset.title_norm,asset_key)
+        actor_facets = [f for f in positive if f.kind == 'actor']
+        if actor_facets and not any(f.kind in {'director','character'} for f in positive):
+            row = getattr(cat,'metadata',{}).get(asset_key,{})
+            primary = {normalize(member['actor_name']) for member in row.get('primary_cast',[])}
+            primary_matches = sum(any(e.kind == 'actor' and e.norm in primary for e in f.alternatives)
+                                  for f in actor_facets)
+            return (-primary_matches,0,asset.title_norm,asset_key)
+        return (0,0,asset.title_norm,asset_key)
 
     async def _rerank(self, plan: Plan, cat: Catalog, assets: list[AssetResult], resp: dict[str, Any]) -> list[AssetResult]:
         depth = min(settings.rerank_depth, len(assets))

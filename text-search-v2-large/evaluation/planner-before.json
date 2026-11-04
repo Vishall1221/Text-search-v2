@@ -1,0 +1,2519 @@
+{
+  "scope": "Synthetic fixed catalog; planner/filter safety, not actual Mac catalog accuracy",
+  "judgments_sha256": "63c39c058385c00d4ca5784c0abd9316c181a6f9b23c4dc2879c63c7714178a1",
+  "passed": 43,
+  "total": 63,
+  "groups": {
+    "documented": {
+      "passed": 8,
+      "total": 13
+    },
+    "roles": {
+      "passed": 10,
+      "total": 25
+    },
+    "safety": {
+      "passed": 13,
+      "total": 13
+    },
+    "titles": {
+      "passed": 12,
+      "total": 12
+    }
+  },
+  "benchmark_2357": {
+    "assets": 2357,
+    "requests": 189,
+    "p50_ms": 1.486,
+    "p95_ms": 26.622,
+    "max_ms": 39.073,
+    "scope": "in-process planner only; serial warm runs; no database, BGE or HTTP"
+  },
+  "cases": [
+    {
+      "query": "Parasakthi",
+      "expected": [
+        "M01"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M01"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M01"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'parasakthi' -> Parasakthi – Uncensored Version",
+        "title: Parasakthi – Uncensored Version",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.697
+    },
+    {
+      "query": "Parimila",
+      "expected": [
+        "M02"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M02"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M02"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'parimala' -> Parimala and Co",
+        "title: Parimala and Co",
+        "mode=title terms=[] dense=''",
+        "autocorrect character 'parimila' -> 'Parimala' (edit)"
+      ],
+      "notes": [
+        "Showing results for \"Parimala\" (you typed \"parimila\")."
+      ],
+      "elapsed_ms": 5.166
+    },
+    {
+      "query": "Parimala and Co",
+      "expected": [
+        "M02"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M02"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M02"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Parimala and Co",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.445
+    },
+    {
+      "query": "Vijay movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M05"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Vijay",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.24
+    },
+    {
+      "query": "Thalapathy movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M22"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M22"
+      ],
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M22"
+      ],
+      "missing": [
+        "M03",
+        "M04"
+      ],
+      "terms": [],
+      "trace": [
+        "title: Thalapathy",
+        "content_type: movie",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.168
+    },
+    {
+      "query": "Talabadi movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17",
+        "M18",
+        "M19",
+        "M20",
+        "M21",
+        "M22",
+        "M23",
+        "M24",
+        "M25",
+        "M26",
+        "M27",
+        "M28"
+      ],
+      "actual_kinds": [
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M01",
+        "M02",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17",
+        "M18",
+        "M19",
+        "M20",
+        "M21",
+        "M22",
+        "M23",
+        "M24",
+        "M25",
+        "M26",
+        "M27",
+        "M28"
+      ],
+      "missing": [],
+      "terms": [
+        "talabadi"
+      ],
+      "trace": [
+        "content_type: movie",
+        "mode=mixed terms=['talabadi'] dense='talabadi'"
+      ],
+      "notes": [],
+      "elapsed_ms": 3.292
+    },
+    {
+      "query": "Ilayathalapathy movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M03",
+        "M04"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M03",
+        "M04"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Vijay",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [
+        "Actor alias \"ilayathalapathy\" resolves to Vijay."
+      ],
+      "elapsed_ms": 0.998
+    },
+    {
+      "query": "Parasakthi Uncensored Version",
+      "expected": [
+        "M01"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M01"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M01"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Parasakthi – Uncensored Version",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.241
+    },
+    {
+      "query": "high",
+      "expected": [
+        "M27"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M27"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M27"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'high' -> High Tide",
+        "title: High Tide",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.793
+    },
+    {
+      "query": "2",
+      "expected": [
+        "M09"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "clarification",
+        "entity_role"
+      ],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "empty_query",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [],
+      "missing": [
+        "M09"
+      ],
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 0.661
+    },
+    {
+      "query": "Ka",
+      "expected": [
+        "M10"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M10"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M10"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Ka",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.703
+    },
+    {
+      "query": "Movies with a character named Vijay",
+      "expected": [
+        "M05"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M03",
+        "M04"
+      ],
+      "missing": [],
+      "terms": [
+        "character",
+        "named"
+      ],
+      "trace": [
+        "content_type: movie",
+        "actor: Vijay",
+        "mode=mixed terms=['character', 'named'] dense='character named'"
+      ],
+      "notes": [],
+      "elapsed_ms": 4.33
+    },
+    {
+      "query": "Movies directed by Shankar",
+      "expected": [
+        "M03"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M03"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "director"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M03"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "director: Shankar",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.958
+    },
+    {
+      "query": "movies starring Vijay",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M05"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "actor: Vijay",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.805
+    },
+    {
+      "query": "actor Vijay films",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M05"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Vijay",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.438
+    },
+    {
+      "query": "character Vijay movies",
+      "expected": [
+        "M05"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M03",
+        "M04"
+      ],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "actor: Vijay",
+        "content_type: movie",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.438
+    },
+    {
+      "query": "movies with character Thalapathy",
+      "expected": [
+        "M06"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M06"
+      ],
+      "actual_kinds": [
+        "character",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "content_type: movie",
+        "character: Thalapathy",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.783
+    },
+    {
+      "query": "play Thalapathy",
+      "expected": [
+        "M22"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M22"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M22"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Thalapathy",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.926
+    },
+    {
+      "query": "Thalapathy",
+      "expected": [
+        "M22"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M22"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M22"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Thalapathy",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.771
+    },
+    {
+      "query": "Salman Khan movies",
+      "expected": [
+        "M11"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M11",
+        "M12"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M11",
+        "M12"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [
+        "M12"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Salman Khan",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.036
+    },
+    {
+      "query": "movies with a character named Salman Khan",
+      "expected": [
+        "M12"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M11",
+        "M12"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M11"
+      ],
+      "missing": [],
+      "terms": [
+        "character",
+        "named"
+      ],
+      "trace": [
+        "content_type: movie",
+        "actor: Salman Khan",
+        "mode=mixed terms=['character', 'named'] dense='character named'"
+      ],
+      "notes": [],
+      "elapsed_ms": 4.698
+    },
+    {
+      "query": "Sallu Bhai films",
+      "expected": [
+        "M11"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M15"
+      ],
+      "actual_kinds": [
+        "character",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M15"
+      ],
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M15"
+      ],
+      "missing": [
+        "M11"
+      ],
+      "terms": [],
+      "trace": [
+        "character: Sallu Bhai",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [
+        "Actor alias \"sallu\" resolves to Salman Khan."
+      ],
+      "elapsed_ms": 1.112
+    },
+    {
+      "query": "character Sallu Bhai",
+      "expected": [
+        "M15"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M15"
+      ],
+      "actual_kinds": [
+        "character"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "character: Sallu Bhai",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [
+        "Actor alias \"sallu\" resolves to Salman Khan."
+      ],
+      "elapsed_ms": 1.924
+    },
+    {
+      "query": "Suriya films",
+      "expected": [
+        "M12"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M12"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M12"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Suriya",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.926
+    },
+    {
+      "query": "Dev Patel movies",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M16",
+        "M17"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M17",
+        "M16"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M17"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Dev Patel",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.987
+    },
+    {
+      "query": "movies starring Dev Patel",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M16",
+        "M17"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M17",
+        "M16"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M17"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "actor: Dev Patel",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.89
+    },
+    {
+      "query": "movies with a character named Dev Patel",
+      "expected": [
+        "M17"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M16",
+        "M17"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M16"
+      ],
+      "missing": [],
+      "terms": [
+        "character",
+        "named"
+      ],
+      "trace": [
+        "content_type: movie",
+        "actor: Dev Patel",
+        "mode=mixed terms=['character', 'named'] dense='character named'"
+      ],
+      "notes": [],
+      "elapsed_ms": 4.36
+    },
+    {
+      "query": "movies directed by Leela Rao",
+      "expected": [
+        "M14",
+        "M16",
+        "M19"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M14",
+        "M16",
+        "M19"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "director"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M16",
+        "M19",
+        "M14"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "director: Leela Rao",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.014
+    },
+    {
+      "query": "movies starring Leela Rao",
+      "expected": [
+        "M18"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M18"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M18"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "actor: Leela Rao",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.116
+    },
+    {
+      "query": "movies with character Shankar",
+      "expected": [
+        "M13"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M03",
+        "M13",
+        "M14"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M03",
+        "M14"
+      ],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "content_type: movie",
+        "actor: Shankar",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.853
+    },
+    {
+      "query": "movies starring Shankar",
+      "expected": [
+        "M14"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M13",
+        "M14"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M13",
+        "M14"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M13"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "actor: Shankar",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.821
+    },
+    {
+      "query": "Nila Menon movies",
+      "expected": [
+        "M23",
+        "M26"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed"
+      ],
+      "actual_allowed": [
+        "M23",
+        "M24",
+        "M26"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M24",
+        "M23",
+        "M26"
+      ],
+      "first_relevant_rank": 2,
+      "false_inclusions": [
+        "M24"
+      ],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Nila Menon",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.065
+    },
+    {
+      "query": "movies with a character named Nila Menon",
+      "expected": [
+        "M24"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M23",
+        "M24",
+        "M26"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M23",
+        "M26"
+      ],
+      "missing": [],
+      "terms": [
+        "character",
+        "named"
+      ],
+      "trace": [
+        "content_type: movie",
+        "actor: Nila Menon",
+        "mode=mixed terms=['character', 'named'] dense='character named'"
+      ],
+      "notes": [],
+      "elapsed_ms": 4.832
+    },
+    {
+      "query": "Nova movies",
+      "expected": [
+        "M23",
+        "M26"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M23"
+      ],
+      "actual_kinds": [
+        "character",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M23"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [
+        "M26"
+      ],
+      "terms": [],
+      "trace": [
+        "character: Nova",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.99
+    },
+    {
+      "query": "character Nova",
+      "expected": [
+        "M23"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M23"
+      ],
+      "actual_kinds": [
+        "character"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "character: Nova",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.829
+    },
+    {
+      "query": "The Navigator movies",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M16"
+      ],
+      "actual_kinds": [
+        "actor",
+        "content_type"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M16"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "actor: Dev Patel",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [
+        "Actor alias \"the navigator\" resolves to Dev Patel."
+      ],
+      "elapsed_ms": 1.072
+    },
+    {
+      "query": "movies directed by Mira Dev",
+      "expected": [
+        "M23",
+        "M24"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M23",
+        "M24"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "director"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M24",
+        "M23"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "director: Mira Dev",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.478
+    },
+    {
+      "query": "movies with character Mira Dev",
+      "expected": [
+        "M25"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "allowed",
+        "entity_role"
+      ],
+      "actual_allowed": [
+        "M23",
+        "M24",
+        "M25"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "director"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": [
+        "M23",
+        "M24"
+      ],
+      "missing": [],
+      "terms": [
+        "character"
+      ],
+      "trace": [
+        "content_type: movie",
+        "director: Mira Dev",
+        "mode=mixed terms=['character'] dense='character'"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.843
+    },
+    {
+      "query": "Parimala",
+      "expected": [
+        "M02"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M02"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M02"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'parimala' -> Parimala and Co",
+        "title: Parimala and Co",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.825
+    },
+    {
+      "query": "play parasakthi",
+      "expected": [
+        "M01"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M01"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M01"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'parasakthi' -> Parasakthi – Uncensored Version",
+        "title: Parasakthi – Uncensored Version",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.968
+    },
+    {
+      "query": "Ninna Preethiya",
+      "expected": [
+        "M07"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M07"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M07"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'ninna preethiya' -> Inthi Ninna Preethiya",
+        "title: Inthi Ninna Preethiya",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.989
+    },
+    {
+      "query": "Copper Horizn",
+      "expected": [
+        "M16"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M16"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M16"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Copper Horizon",
+        "mode=title terms=[] dense=''",
+        "autocorrect title 'copper horizn' -> 'Copper Horizon' (edit)"
+      ],
+      "notes": [
+        "Showing results for \"Copper Horizon\" (you typed \"copper horizn\")."
+      ],
+      "elapsed_ms": 1.505
+    },
+    {
+      "query": "Copper Horizon",
+      "expected": [
+        "M16"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M16"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M16"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Copper Horizon",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.924
+    },
+    {
+      "query": "Quiet Lake",
+      "expected": [
+        "M28"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M28"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M28"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: The Quiet Lake",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.91
+    },
+    {
+      "query": "\"The Gift\"",
+      "expected": [
+        "M20"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M20"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M20"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: The Gift",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.866
+    },
+    {
+      "query": "Nila",
+      "expected": [
+        "M25"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M25"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M25"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Nila",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.727
+    },
+    {
+      "query": "Aster Voyage",
+      "expected": [
+        "M23"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M23"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M23"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Aster Voyage",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.904
+    },
+    {
+      "query": "play High",
+      "expected": [
+        "M27"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M27"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M27"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'high' -> High Tide",
+        "title: High Tide",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.89
+    },
+    {
+      "query": "play Family",
+      "expected": [
+        "M21"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M21"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M21"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title fragment 'family' -> Family Secrets",
+        "title: Family Secrets",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.911
+    },
+    {
+      "query": "Starfall",
+      "expected": [
+        "M26"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M26"
+      ],
+      "actual_kinds": [
+        "title"
+      ],
+      "actual_mode": "title",
+      "clarification": null,
+      "listing_order": [
+        "M26"
+      ],
+      "first_relevant_rank": 1,
+      "false_inclusions": [],
+      "missing": [],
+      "terms": [],
+      "trace": [
+        "title: Starfall",
+        "mode=title terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.808
+    },
+    {
+      "query": "a man finds the gift in a village",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "man",
+        "finds",
+        "gift",
+        "village"
+      ],
+      "trace": [
+        "mode=mixed terms=['man', 'finds', 'gift', 'village'] dense='man finds the gift in a village'"
+      ],
+      "notes": [],
+      "elapsed_ms": 3.343
+    },
+    {
+      "query": "a child is kidnapped",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title",
+        "actor",
+        "character",
+        "director"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "child",
+        "kidnapped"
+      ],
+      "trace": [
+        "mode=mixed terms=['child', 'kidnapped'] dense='child is kidnapped'"
+      ],
+      "notes": [],
+      "elapsed_ms": 1.481
+    },
+    {
+      "query": "a woman named Parimala rescues a child",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M07"
+      ],
+      "actual_kinds": [
+        "character"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "woman",
+        "named",
+        "rescues",
+        "child"
+      ],
+      "trace": [
+        "character: Parimala",
+        "mode=mixed terms=['woman', 'named', 'rescues', 'child'] dense='woman named rescues a child'"
+      ],
+      "notes": [],
+      "elapsed_ms": 5.079
+    },
+    {
+      "query": "a superstar saves a village",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "actor"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "superstar",
+        "saves",
+        "village"
+      ],
+      "trace": [
+        "mode=mixed terms=['superstar', 'saves', 'village'] dense='superstar saves a village'"
+      ],
+      "notes": [],
+      "elapsed_ms": 4.104
+    },
+    {
+      "query": "a highway robbery",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "robbery",
+        "highway"
+      ],
+      "trace": [
+        "mode=mixed terms=['robbery', 'highway'] dense='highway robbery'"
+      ],
+      "notes": [],
+      "elapsed_ms": 2.055
+    },
+    {
+      "query": "a high speed chase",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [
+        "speed",
+        "chase",
+        "high"
+      ],
+      "trace": [
+        "mode=mixed terms=['speed', 'chase', 'high'] dense='high speed chase'"
+      ],
+      "notes": [],
+      "elapsed_ms": 3.624
+    },
+    {
+      "query": "family films",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M21"
+      ],
+      "actual_kinds": [
+        "content_type",
+        "genre"
+      ],
+      "actual_mode": "browse",
+      "clarification": null,
+      "listing_order": [
+        "M21"
+      ],
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [
+        "genre: family",
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [],
+      "elapsed_ms": 0.946
+    },
+    {
+      "query": "feel-good movies",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17",
+        "M18",
+        "M19",
+        "M20",
+        "M21",
+        "M22",
+        "M23",
+        "M24",
+        "M25",
+        "M26",
+        "M27",
+        "M28"
+      ],
+      "actual_kinds": [
+        "content_type"
+      ],
+      "actual_mode": "catalog",
+      "clarification": null,
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [
+        "content_type: movie",
+        "mode=browse terms=[] dense=''"
+      ],
+      "notes": [
+        "\"feel good\" is a descriptive preference, searched using plot/theme evidence; it is not a verified mood or suitability label."
+      ],
+      "elapsed_ms": 0.803
+    },
+    {
+      "query": "movies starring Unknown Person",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "unknown_name",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 2.866
+    },
+    {
+      "query": "movies directed by Unknown Person",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "unknown_name",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 2.485
+    },
+    {
+      "query": "scene where a child escapes",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "unsupported_scene",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 0.28
+    },
+    {
+      "query": "original language Tamil movies",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "unsupported_original_language",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 0.194
+    },
+    {
+      "query": "safe for kids",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "actual_allowed": null,
+      "actual_kinds": [],
+      "actual_mode": "clarify",
+      "clarification": "unsupported_suitability",
+      "listing_order": null,
+      "first_relevant_rank": null,
+      "false_inclusions": null,
+      "missing": null,
+      "terms": [],
+      "trace": [],
+      "notes": [],
+      "elapsed_ms": 0.118
+    }
+  ]
+}

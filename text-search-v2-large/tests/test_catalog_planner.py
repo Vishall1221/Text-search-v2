@@ -92,6 +92,13 @@ def test_fuzzy_partial_names_and_aliases_remain_available(catalog):
     assert plan('thalapathyy movies',catalog).allowed=={'F1'}
     assert plan('shahrukh khan films',catalog).allowed=={'F6'}
 
+
+def test_alias_phonetics_respects_disabled_autocorrection(catalog,monkeypatch):
+    import dataclasses
+    import app.planner as planner
+    monkeypatch.setattr(planner,'settings',dataclasses.replace(planner.settings,autocorrect_max_edits=0))
+    assert plan('Talabadi movies',catalog).clarification is not None
+
 def test_negated_soft_preference_does_not_turn_positive(catalog):
     assert plan('movies not very uplifting',catalog).clarification.reason=='unsupported_preference_exclusion'
 

@@ -134,3 +134,16 @@ raises on iteration to verify title lookup uses postings, not an asset scan.
 The actual Mac catalog remains unavailable here. These are regression fixtures,
 not real-catalog relevance measurements. Existing scale timings above predate this
 correction and were not remeasured. No table, importer or vector changes are needed.
+
+## Comprehensive correctness investigation
+
+See [CORRECTNESS_REPORT.md](CORRECTNESS_REPORT.md) for confirmed causes, approaches
+considered, all documented before/after examples, performance, limitations and
+reproduction commands. The expanded CHATGPT.md was read as the problem statement;
+the proposed universal field hierarchy was evaluated rather than adopted blindly.
+
+The fixed 63 synthetic judgments improved from 43 to 63 passing through both the
+planner and actual API/PostgreSQL/real BGE. There were 20 improvements and no
+regressions in that set. Two separate Highway-only no-evidence controls now abstain.
+The full test suite passes 210 Python tests and 2 JavaScript tests. Real Mac data
+remains unavailable and detailed semantic-discovery tails remain uncalibrated.

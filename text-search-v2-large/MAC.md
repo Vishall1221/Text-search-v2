@@ -1,5 +1,10 @@
 # Run Text Search V2 Large on your existing Mac catalog
 
+The correctness update described in [CORRECTNESS_REPORT.md](CORRECTNESS_REPORT.md)
+requires copying the updated application files and restarting. The existing schema,
+movie data and matching BGE embeddings remain compatible; no reimport is required.
+Synthetic evaluation imports belong only in a disposable test database.
+
 If using this GitHub repository, update the checkout and enter the new subfolder:
 
 ```bash

@@ -21,6 +21,7 @@ from datetime import date
 from typing import Any, Iterable
 
 from app.text import normalize, osa_distance, singularize, trigrams
+from app.intent import role_context
 from app.vocab import (CONTENT_TYPE_WORDS, GENRE_SYNONYMS, LANGUAGE_ALIASES, NOISE,
                        TITLE_REQUEST_CUES, EXPLICIT_PERSON_SLOTS, NARRATIVE_TITLE_BLOCKERS,
                        CATALOG_MARKERS, SORT_LATEST, SORT_OLDEST)
@@ -133,6 +134,7 @@ class Catalog:
         self.exact: dict[str, list[Entity]] = defaultdict(list)
         self.skel: dict[str, list[Entity]] = defaultdict(list)
         self.tri: dict[str, set[int]] = defaultdict(set)
+        self.phonetic_tri: dict[str, set[int]] = defaultdict(set)
         self.fuzzy_keys: list[tuple[str, Entity]] = []
         self.title_assets: dict[str, set[str]] = defaultdict(set)       # title/alias norm -> asset keys
         self.title_words: dict[str, set[str]] = defaultdict(set)
@@ -164,9 +166,8 @@ class Catalog:
             if row['actor_norm'] not in self.actor_assets:
                 continue
             phrase = row['alias_norm']
-            # Exact real names/titles take precedence over somebody else's nickname.
-            if any(not e.via_alias for e in self.exact.get(phrase, ())):
-                continue
+            # Preserve typed evidence even when a character/title shares this
+            # spelling. The planner resolves intent; loading must not erase it.
             entity = Entity('actor', row['actor_name'], row['actor_norm'], via_alias=True)
             if row['requires_context']:
                 self.guarded_aliases[phrase].append(entity)
@@ -187,6 +188,8 @@ class Catalog:
             for t in trigrams(phrase):
                 self.tri[t].add(idx)
             sk = skeleton(phrase)
+            for t in trigrams(sk):
+                self.phonetic_tri[t].add(idx)
             if ent not in self.skel[sk]:
                 self.skel[sk].append(ent)
 
@@ -243,6 +246,12 @@ class Catalog:
                     for p in e.norm.split():
                         if len(p) >= 4 and p not in NOISE and not p.isdigit() and p not in {'actor','actress','character','director'}:
                             self._partials[p].add(Entity(e.kind, e.canonical, e.norm, partial=True))
+        for word, titles in self.title_words.items():
+            if len(word) >= 4 and word not in NOISE and not word.isdigit():
+                for title in titles:
+                    if word != title:
+                        e = self.title_entities[title]
+                        self._partials[word].add(Entity('title',e.canonical,e.norm,partial=True))
         for w, full in self.genre_words.items():
             if w not in self.exact or all(e.kind != "genre" for e in self.exact[w]):
                 self.exact[w].append(Entity("genre", w, w))
@@ -282,43 +291,38 @@ class Catalog:
     def partial_entities(self, word: str) -> list[Entity]:
         return sorted(self._partials.get(word, ()), key=lambda e: (e.kind, e.norm))
 
-    def _title_fragment(self, tokens: list[str], start: int, end: int, existing: list[Entity]) -> list[Entity]:
-        """Indexed whole-word title fragments, guarded by request context.
-
-        No movie-specific rules or full-catalog request scan. Query tokens select
-        posting lists; only their intersection is checked for contiguous wording.
-        Explicit person slots and known category requests retain their meaning.
-        """
-        if any(e.kind == 'title' for e in existing):
-            return []  # Exact title always wins over longer partial title matches.
+    def title_context(self, tokens: list[str], start: int, end: int, existing: list[Entity]) -> bool:
+        """Whether this span can mean a title fragment, including before spelling recovery."""
         words = tokens[start:end]
         phrase = ' '.join(words)
         before = tokens[start-1] if start else ''
-        if before in EXPLICIT_PERSON_SLOTS:
-            return []
-        outside = tokens[:start]+tokens[end:]
-        if any(t in NARRATIVE_TITLE_BLOCKERS for t in outside):
-            return []
-        explicit = any(t in TITLE_REQUEST_CUES for t in tokens[:start])
+        role,grammar = role_context(tokens,start)
+        if role in {'actor','director','character'} or before in EXPLICIT_PERSON_SLOTS:
+            return False
+        if any(t in NARRATIVE_TITLE_BLOCKERS for i,t in enumerate(tokens)
+               if not start <= i < end and i not in grammar):
+            return False
+        explicit = role == 'title' or any(t in TITLE_REQUEST_CUES for t in tokens[:start])
         if not explicit:
-            if len(phrase) < 4 or not any(t.isalpha() for t in words):
-                return []
+            if len(phrase) < 4 or not any(ch.isalpha() for ch in phrase):
+                return False
             if any(e.kind in {'genre','theme','language','content_type'} for e in existing):
-                return []
+                return False
             significant = [w for w in words if w not in NOISE]
             # A known person name is already an entity candidate, not an ordinary
             # plot word. Its frequency must not let a character override a title.
             named = any(e.kind in {'actor','director','character'} for e in existing)
-            common = any(self.df(w)/self.doc_total >= .05 and self.df(w) > len(self.title_words[w])
+            common = any(self.df(w)/self.doc_total >= .05 and self.df(w) > len(self.title_words.get(w,()))
                          for w in significant)
             if not significant or (common and not named):
-                return []
+                return False
         # Remaining words must be request grammar or recognized structured facets,
         # rather than an ordinary plot description containing a title word.
         sort_words = {word for cue in SORT_LATEST+SORT_OLDEST for word in cue}
         fragment_indexes = set(range(start,end))
         covered = {i for i,t in enumerate(tokens) if i in fragment_indexes or t in NOISE
                    or t in CONTENT_TYPE_WORDS or t in CATALOG_MARKERS or t in TITLE_REQUEST_CUES or t in sort_words}
+        covered |= grammar
         for i in range(len(tokens)):
             if i in covered:
                 continue
@@ -331,7 +335,15 @@ class Catalog:
                     covered |= inds
                     break
         if len(covered) != len(tokens):
+            return False
+        return True
+
+    def _title_fragment(self, tokens: list[str], start: int, end: int, existing: list[Entity]) -> list[Entity]:
+        """Intersect catalog posting lists, then check contiguous whole words."""
+        if any(e.kind == 'title' for e in existing) or not self.title_context(tokens,start,end,existing):
             return []
+        words = tokens[start:end]
+        phrase = ' '.join(words)
         postings = [self.title_words.get(word,set()) for word in words]
         if not postings or any(not p for p in postings):
             return []
@@ -348,7 +360,8 @@ class Catalog:
                 guarded = self.guarded_aliases.get(phrase, [])
                 before = tokens[i-1] if i else ''
                 after = tokens[i+length] if i+length < n else ''
-                if guarded and (before in {'starring','featuring','actor','actress','with'}
+                role,_ = role_context(tokens,i)
+                if guarded and (role == 'actor' or before in {'starring','featuring','actor','actress','with'}
                                 or after in CONTENT_TYPE_WORDS
                                 or (i == 0 and length == n and length > 1)):
                     spans.append(Span(i, i+length, phrase, list(guarded)))
@@ -369,6 +382,7 @@ class Catalog:
         return spans
 
     def fuzzy(self, phrase: str, *, kinds: tuple[str, ...] = FUZZY_KINDS, max_dist: int = 2,
+              approximate_phonetic: bool = False,
               limit: int = 5) -> list[Candidate]:
         """Candidates for a phrase that matched nothing exactly (best distance per entity)."""
         if len(phrase) < 3:
@@ -396,6 +410,19 @@ class Catalog:
         for ent in self.skel.get(sk, ()):
             if ent.kind in kinds and ent.ident not in best:
                 best[ent.ident] = Candidate(ent, 1, True)
+        if approximate_phonetic and len(sk) >= 7:
+            shared_sk: Counter[int] = Counter()
+            for t in trigrams(sk):
+                shared_sk.update(self.phonetic_tri.get(t,()))
+            for idx,_ in sorted(shared_sk.items(),key=lambda item:(-item[1],item[0]))[:40]:
+                key,ent = self.fuzzy_keys[idx]
+                # Approximate phonetics needs alias + actor intent; not a broad
+                # edit-distance expansion over arbitrary plot words or names.
+                if ent.kind != 'actor' or not ent.via_alias or ent.kind not in kinds:
+                    continue
+                distance = osa_distance(sk,skeleton(key),2)
+                if distance <= 2 and ent.ident not in best:
+                    best[ent.ident] = Candidate(ent,distance,True)
         # partial (single word of a longer name)
         if " " not in phrase and len(phrase) >= 4:
             shared_partials = Counter()

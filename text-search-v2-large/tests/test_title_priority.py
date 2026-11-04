@@ -30,11 +30,16 @@ def test_title_request_beats_character_collision(query,key):
 
 
 @pytest.mark.parametrize('query,key',[
-    ('movies with character Parimala','P3'),('character Parasakthi','P2'),
-    ('movies featuring Parimala','P3'),('movies starring Parasakthi','P2')])
+    ('movies with character Parimala','P3'),('character Parasakthi','P2')])
 def test_explicit_character_request_keeps_character_intent(query,key):
     plan=plan_query(query,title_catalog())
     assert plan.allowed=={key} and not any(f.kind=='title' for f in plan.facets)
+
+
+@pytest.mark.parametrize('query',['movies featuring Parimala','movies starring Parasakthi'])
+def test_actor_slot_does_not_fall_back_to_character_only_name(query):
+    plan=plan_query(query,title_catalog())
+    assert plan.clarification and plan.clarification.reason=='unknown_name'
 
 
 def test_complete_title_wins_over_other_longer_titles():

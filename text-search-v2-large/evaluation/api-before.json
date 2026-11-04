@@ -1,0 +1,4165 @@
+{
+  "synthetic": true,
+  "catalog_facts_verified": false,
+  "fixture_movies": 28,
+  "scope": "Actual ASGI API, real PostgreSQL FTS and BGE; synthetic labelled catalog, unavailable Mac export",
+  "judgments_sha256": "63c39c058385c00d4ca5784c0abd9316c181a6f9b23c4dc2879c63c7714178a1",
+  "fixture_sha256": "b8e0cb30b89cc993015ad18bb0dbfb057d5d4496cd6315b430ebddbc9f5836db",
+  "model_identity": {
+    "name": "bge-small-en-v1.5",
+    "revision": "828e1496d7fabb79",
+    "pooling": "cls",
+    "query_prefix": "Represent this sentence for searching relevant passages: ",
+    "dimensions": 384
+  },
+  "readiness": {
+    "status": "ready",
+    "schema": "schema_v2_large",
+    "generation": 9,
+    "assets": 28,
+    "documents": 28,
+    "actor_aliases": 21,
+    "lexicon_words": 71,
+    "dense": true,
+    "dense_reason": null,
+    "embedding_model": "bge-small-en-v1.5",
+    "dense_calibrated": false,
+    "date_basis": "ZEE5 release",
+    "language_basis": "available audio tracks",
+    "scenes": false,
+    "dialogue": false
+  },
+  "import_report": {
+    "schema": "schema_v2_large",
+    "assets": 28,
+    "aliases": 21,
+    "alias_groups_absent_from_cast": [
+      "Kamal Haasan",
+      "Nayanthara",
+      "Shah Rukh Khan",
+      "Vadivelu"
+    ],
+    "missing_plot": 0,
+    "missing_audio_languages": 0,
+    "missing_original_release_date": 28,
+    "released_date_kind": "platform",
+    "audio_languages": [
+      "ENGLISH",
+      "HINDI",
+      "TAMIL"
+    ],
+    "full_snapshot_replacement": true,
+    "documents": 28,
+    "embedded": 0,
+    "reused": 28,
+    "corpus_sha256": "71276d0951417519d51f567917fb8dc982e7bd8786c2ac7043e5b285c1492afe",
+    "max_tokens": 27,
+    "lexical_only": false,
+    "aliases_sha256": "dd657c96f6cacfb5d2b4abeebcff121557fe578f82eb835149b2c5b016518a69",
+    "generation_id": 9,
+    "activated": true,
+    "seconds": 0.157
+  },
+  "summary": {
+    "passed": 43,
+    "total": 63,
+    "finite_set_queries": 50,
+    "true_positive": 56,
+    "false_positive": 48,
+    "false_negative": 5,
+    "micro_precision": 0.5385,
+    "micro_recall": 0.918,
+    "reciprocal_rank": 0.7729,
+    "scope": "finite-set relevance only for labelled title/person queries; narrative cases check filter safety"
+  },
+  "latency": {
+    "requests": 63,
+    "p50_ms": 4.721,
+    "p95_ms": 42.072,
+    "max_ms": 60.884,
+    "scope": "serial ASGI requests; query embeddings initially uncached; excludes process/model startup"
+  },
+  "cases": [
+    {
+      "query": "Parasakthi",
+      "expected": [
+        "M01"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M01"
+      ],
+      "result_titles": [
+        "Parasakthi – Uncensored Version"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parasakthi – Uncensored Version"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'parasakthi' -> Parasakthi – Uncensored Version",
+          "title: Parasakthi – Uncensored Version",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 4.3
+      },
+      "wall_ms": 7.675,
+      "generation": 9
+    },
+    {
+      "query": "Parimila",
+      "expected": [
+        "M02"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M02"
+      ],
+      "result_titles": [
+        "Parimala and Co"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parimala and Co"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": [
+          {
+            "typed": "parimila",
+            "used": "Parimala",
+            "kind": "character",
+            "method": "edit"
+          }
+        ]
+      },
+      "clarification": null,
+      "notes": [
+        "Showing results for \"Parimala\" (you typed \"parimila\")."
+      ],
+      "debug": {
+        "trace": [
+          "title fragment 'parimala' -> Parimala and Co",
+          "title: Parimala and Co",
+          "mode=title terms=[] dense=''",
+          "autocorrect character 'parimila' -> 'Parimala' (edit)"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 4.2
+      },
+      "wall_ms": 5.97,
+      "generation": 9
+    },
+    {
+      "query": "Parimala and Co",
+      "expected": [
+        "M02"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M02"
+      ],
+      "result_titles": [
+        "Parimala and Co"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parimala and Co"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Parimala and Co",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 2.7
+      },
+      "wall_ms": 4.567,
+      "generation": 9
+    },
+    {
+      "query": "Vijay movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "result_titles": [
+        "Abhinethri",
+        "Bhairava",
+        "OP 2"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Vijay",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Vijay",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 2.2
+      },
+      "wall_ms": 3.985,
+      "generation": 9
+    },
+    {
+      "query": "Thalapathy movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M22"
+      ],
+      "result_titles": [
+        "Thalapathy"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Thalapathy",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Thalapathy",
+          "content_type: movie",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 2.2
+      },
+      "wall_ms": 3.835,
+      "generation": 9
+    },
+    {
+      "query": "Talabadi movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M22",
+        "M05",
+        "M07",
+        "M01",
+        "M06",
+        "M11",
+        "M03",
+        "M27",
+        "M19",
+        "M10",
+        "M08",
+        "M25",
+        "M24",
+        "M04",
+        "M15",
+        "M02",
+        "M18",
+        "M09",
+        "M12",
+        "M16",
+        "M23",
+        "M13",
+        "M26",
+        "M17",
+        "M14",
+        "M28",
+        "M20",
+        "M21"
+      ],
+      "result_titles": [
+        "Thalapathy",
+        "Abhinethri",
+        "Inthi Ninna Preethiya",
+        "Parasakthi – Uncensored Version",
+        "Veerame Vaigai Soodum",
+        "Moonlit Letters",
+        "Bhairava",
+        "High Tide",
+        "Moonlit Roads",
+        "Ka",
+        "Highway",
+        "Nila",
+        "Aster Valley",
+        "OP 2",
+        "Distant Shores",
+        "Parimala and Co",
+        "Silver Orchard",
+        "2",
+        "River of Courage",
+        "Copper Horizon",
+        "Aster Voyage",
+        "Silent Harbour",
+        "Starfall",
+        "Amber Station",
+        "Winter Lantern",
+        "The Quiet Lake",
+        "The Gift",
+        "Family Secrets"
+      ],
+      "first_relevant_rank": 7,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "talabadi"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "mode=mixed terms=['talabadi'] dense='talabadi'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 28
+      },
+      "timings_ms": {
+        "embed": 27.1,
+        "retrieve": 47.86,
+        "total": 54.0
+      },
+      "wall_ms": 60.884,
+      "generation": 9
+    },
+    {
+      "query": "Ilayathalapathy movies",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M03",
+        "M04"
+      ],
+      "result_titles": [
+        "Bhairava",
+        "OP 2"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Vijay",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "Actor alias \"ilayathalapathy\" resolves to Vijay."
+      ],
+      "debug": {
+        "trace": [
+          "actor: Vijay",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 2.6
+      },
+      "wall_ms": 4.9,
+      "generation": 9
+    },
+    {
+      "query": "Parasakthi Uncensored Version",
+      "expected": [
+        "M01"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M01"
+      ],
+      "result_titles": [
+        "Parasakthi – Uncensored Version"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parasakthi – Uncensored Version"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Parasakthi – Uncensored Version",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.6
+      },
+      "wall_ms": 4.31,
+      "generation": 9
+    },
+    {
+      "query": "high",
+      "expected": [
+        "M27"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M27"
+      ],
+      "result_titles": [
+        "High Tide"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: High Tide"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'high' -> High Tide",
+          "title: High Tide",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.0
+      },
+      "wall_ms": 3.596,
+      "generation": 9
+    },
+    {
+      "query": "2",
+      "expected": [
+        "M09"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "clarification",
+        "entity_role"
+      ],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "empty_query",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 1.5
+      },
+      "wall_ms": 2.814,
+      "generation": 9
+    },
+    {
+      "query": "Ka",
+      "expected": [
+        "M10"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M10"
+      ],
+      "result_titles": [
+        "Ka"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Ka"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Ka",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.8
+      },
+      "wall_ms": 3.359,
+      "generation": 9
+    },
+    {
+      "query": "Movies with a character named Vijay",
+      "expected": [
+        "M05"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "result_titles": [
+        "Bhairava",
+        "OP 2",
+        "Abhinethri"
+      ],
+      "first_relevant_rank": 3,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "actor: Vijay"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character",
+          "named"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Vijay",
+          "mode=mixed terms=['character', 'named'] dense='character named'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "embed": 22.8,
+        "retrieve": 29.36,
+        "total": 37.9
+      },
+      "wall_ms": 39.725,
+      "generation": 9
+    },
+    {
+      "query": "Movies directed by Shankar",
+      "expected": [
+        "M03"
+      ],
+      "group": "documented",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M03"
+      ],
+      "result_titles": [
+        "Bhairava"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "director: Shankar"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "director: Shankar",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 3.7
+      },
+      "wall_ms": 5.085,
+      "generation": 9
+    },
+    {
+      "query": "movies starring Vijay",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "result_titles": [
+        "Abhinethri",
+        "Bhairava",
+        "OP 2"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "actor: Vijay"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Vijay",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 3.3
+      },
+      "wall_ms": 4.892,
+      "generation": 9
+    },
+    {
+      "query": "actor Vijay films",
+      "expected": [
+        "M03",
+        "M04"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M05",
+        "M03",
+        "M04"
+      ],
+      "result_titles": [
+        "Abhinethri",
+        "Bhairava",
+        "OP 2"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Vijay",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Vijay",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.8
+      },
+      "wall_ms": 4.454,
+      "generation": 9
+    },
+    {
+      "query": "character Vijay movies",
+      "expected": [
+        "M05"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M04",
+        "M03",
+        "M05"
+      ],
+      "result_titles": [
+        "OP 2",
+        "Bhairava",
+        "Abhinethri"
+      ],
+      "first_relevant_rank": 3,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "actor: Vijay",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "actor: Vijay",
+          "content_type: movie",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "embed": 18.8,
+        "retrieve": 22.95,
+        "total": 27.4
+      },
+      "wall_ms": 29.187,
+      "generation": 9
+    },
+    {
+      "query": "movies with character Thalapathy",
+      "expected": [
+        "M06"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M06"
+      ],
+      "result_titles": [
+        "Veerame Vaigai Soodum"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "character: Thalapathy"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "character: Thalapathy",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 4.84,
+        "total": 10.2
+      },
+      "wall_ms": 11.679,
+      "generation": 9
+    },
+    {
+      "query": "play Thalapathy",
+      "expected": [
+        "M22"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M22"
+      ],
+      "result_titles": [
+        "Thalapathy"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Thalapathy"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Thalapathy",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.1
+      },
+      "wall_ms": 3.598,
+      "generation": 9
+    },
+    {
+      "query": "Thalapathy",
+      "expected": [
+        "M22"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M22"
+      ],
+      "result_titles": [
+        "Thalapathy"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Thalapathy"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Thalapathy",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.7
+      },
+      "wall_ms": 2.951,
+      "generation": 9
+    },
+    {
+      "query": "Salman Khan movies",
+      "expected": [
+        "M11"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M11",
+        "M12"
+      ],
+      "result_titles": [
+        "Moonlit Letters",
+        "River of Courage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Salman Khan",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Salman Khan",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.2
+      },
+      "wall_ms": 3.546,
+      "generation": 9
+    },
+    {
+      "query": "movies with a character named Salman Khan",
+      "expected": [
+        "M12"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M11",
+        "M12"
+      ],
+      "result_titles": [
+        "Moonlit Letters",
+        "River of Courage"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "actor: Salman Khan"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character",
+          "named"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Salman Khan",
+          "mode=mixed terms=['character', 'named'] dense='character named'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 8.13,
+        "total": 16.9
+      },
+      "wall_ms": 18.535,
+      "generation": 9
+    },
+    {
+      "query": "Sallu Bhai films",
+      "expected": [
+        "M11"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M15"
+      ],
+      "result_titles": [
+        "Distant Shores"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "character: Sallu Bhai",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "Actor alias \"sallu\" resolves to Salman Khan."
+      ],
+      "debug": {
+        "trace": [
+          "character: Sallu Bhai",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.2
+      },
+      "wall_ms": 3.495,
+      "generation": 9
+    },
+    {
+      "query": "character Sallu Bhai",
+      "expected": [
+        "M15"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M15"
+      ],
+      "result_titles": [
+        "Distant Shores"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "character: Sallu Bhai"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "Actor alias \"sallu\" resolves to Salman Khan.",
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "character: Sallu Bhai",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 5.96,
+        "total": 9.7
+      },
+      "wall_ms": 11.146,
+      "generation": 9
+    },
+    {
+      "query": "Suriya films",
+      "expected": [
+        "M12"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M12"
+      ],
+      "result_titles": [
+        "River of Courage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Suriya",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Suriya",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.4
+      },
+      "wall_ms": 3.809,
+      "generation": 9
+    },
+    {
+      "query": "Dev Patel movies",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M17",
+        "M16"
+      ],
+      "result_titles": [
+        "Amber Station",
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Dev Patel",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Dev Patel",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.1
+      },
+      "wall_ms": 3.505,
+      "generation": 9
+    },
+    {
+      "query": "movies starring Dev Patel",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M17",
+        "M16"
+      ],
+      "result_titles": [
+        "Amber Station",
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "actor: Dev Patel"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Dev Patel",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 4.4
+      },
+      "wall_ms": 5.847,
+      "generation": 9
+    },
+    {
+      "query": "movies with a character named Dev Patel",
+      "expected": [
+        "M17"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M16",
+        "M17"
+      ],
+      "result_titles": [
+        "Copper Horizon",
+        "Amber Station"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "actor: Dev Patel"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character",
+          "named"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Dev Patel",
+          "mode=mixed terms=['character', 'named'] dense='character named'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 7.66,
+        "total": 15.6
+      },
+      "wall_ms": 17.214,
+      "generation": 9
+    },
+    {
+      "query": "movies directed by Leela Rao",
+      "expected": [
+        "M14",
+        "M16",
+        "M19"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M16",
+        "M19",
+        "M14"
+      ],
+      "result_titles": [
+        "Copper Horizon",
+        "Moonlit Roads",
+        "Winter Lantern"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "director: Leela Rao"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "director: Leela Rao",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 4.9
+      },
+      "wall_ms": 6.758,
+      "generation": 9
+    },
+    {
+      "query": "movies starring Leela Rao",
+      "expected": [
+        "M18"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M18"
+      ],
+      "result_titles": [
+        "Silver Orchard"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "actor: Leela Rao"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Leela Rao",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 4.0
+      },
+      "wall_ms": 5.847,
+      "generation": 9
+    },
+    {
+      "query": "movies with character Shankar",
+      "expected": [
+        "M13"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M03",
+        "M14",
+        "M13"
+      ],
+      "result_titles": [
+        "Bhairava",
+        "Winter Lantern",
+        "Silent Harbour"
+      ],
+      "first_relevant_rank": 3,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "actor: Shankar"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Shankar",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 6.79,
+        "total": 14.2
+      },
+      "wall_ms": 16.919,
+      "generation": 9
+    },
+    {
+      "query": "movies starring Shankar",
+      "expected": [
+        "M14"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M13",
+        "M14"
+      ],
+      "result_titles": [
+        "Silent Harbour",
+        "Winter Lantern"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "actor: Shankar"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Shankar",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 5.1
+      },
+      "wall_ms": 7.695,
+      "generation": 9
+    },
+    {
+      "query": "Nila Menon movies",
+      "expected": [
+        "M23",
+        "M26"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results"
+      ],
+      "result_ids": [
+        "M24",
+        "M23",
+        "M26"
+      ],
+      "result_titles": [
+        "Aster Valley",
+        "Aster Voyage",
+        "Starfall"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Nila Menon",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "actor: Nila Menon",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 3.0
+      },
+      "wall_ms": 5.423,
+      "generation": 9
+    },
+    {
+      "query": "movies with a character named Nila Menon",
+      "expected": [
+        "M24"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M26",
+        "M24",
+        "M23"
+      ],
+      "result_titles": [
+        "Starfall",
+        "Aster Valley",
+        "Aster Voyage"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "actor: Nila Menon"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character",
+          "named"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "actor: Nila Menon",
+          "mode=mixed terms=['character', 'named'] dense='character named'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 10.07,
+        "total": 20.1
+      },
+      "wall_ms": 24.08,
+      "generation": 9
+    },
+    {
+      "query": "Nova movies",
+      "expected": [
+        "M23",
+        "M26"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M23"
+      ],
+      "result_titles": [
+        "Aster Voyage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "character: Nova",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "character: Nova",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.0
+      },
+      "wall_ms": 3.475,
+      "generation": 9
+    },
+    {
+      "query": "character Nova",
+      "expected": [
+        "M23"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M23"
+      ],
+      "result_titles": [
+        "Aster Voyage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "character: Nova"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "character: Nova",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 7.38,
+        "total": 11.9
+      },
+      "wall_ms": 13.662,
+      "generation": 9
+    },
+    {
+      "query": "The Navigator movies",
+      "expected": [
+        "M16"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "actor"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M16"
+      ],
+      "result_titles": [
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "actor: Dev Patel",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "Actor alias \"the navigator\" resolves to Dev Patel."
+      ],
+      "debug": {
+        "trace": [
+          "actor: Dev Patel",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.3
+      },
+      "wall_ms": 3.723,
+      "generation": 9
+    },
+    {
+      "query": "movies directed by Mira Dev",
+      "expected": [
+        "M23",
+        "M24"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "director"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M24",
+        "M23"
+      ],
+      "result_titles": [
+        "Aster Valley",
+        "Aster Voyage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "content_type: movie",
+          "director: Mira Dev"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "director: Mira Dev",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 2
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 4.0
+      },
+      "wall_ms": 5.512,
+      "generation": 9
+    },
+    {
+      "query": "movies with character Mira Dev",
+      "expected": [
+        "M25"
+      ],
+      "group": "roles",
+      "mode": null,
+      "kinds": [
+        "character"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": false,
+      "failures": [
+        "results",
+        "entity_role"
+      ],
+      "result_ids": [
+        "M23",
+        "M25",
+        "M24"
+      ],
+      "result_titles": [
+        "Aster Voyage",
+        "Nila",
+        "Aster Valley"
+      ],
+      "first_relevant_rank": 2,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie",
+          "director: Mira Dev"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "character"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "director: Mira Dev",
+          "mode=mixed terms=['character'] dense='character'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 3
+      },
+      "timings_ms": {
+        "embed": 0.0,
+        "retrieve": 5.64,
+        "total": 10.9
+      },
+      "wall_ms": 12.808,
+      "generation": 9
+    },
+    {
+      "query": "Parimala",
+      "expected": [
+        "M02"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M02"
+      ],
+      "result_titles": [
+        "Parimala and Co"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parimala and Co"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'parimala' -> Parimala and Co",
+          "title: Parimala and Co",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.9
+      },
+      "wall_ms": 3.28,
+      "generation": 9
+    },
+    {
+      "query": "play parasakthi",
+      "expected": [
+        "M01"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M01"
+      ],
+      "result_titles": [
+        "Parasakthi – Uncensored Version"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Parasakthi – Uncensored Version"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'parasakthi' -> Parasakthi – Uncensored Version",
+          "title: Parasakthi – Uncensored Version",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.1
+      },
+      "wall_ms": 3.671,
+      "generation": 9
+    },
+    {
+      "query": "Ninna Preethiya",
+      "expected": [
+        "M07"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M07"
+      ],
+      "result_titles": [
+        "Inthi Ninna Preethiya"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Inthi Ninna Preethiya"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'ninna preethiya' -> Inthi Ninna Preethiya",
+          "title: Inthi Ninna Preethiya",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.1
+      },
+      "wall_ms": 3.584,
+      "generation": 9
+    },
+    {
+      "query": "Copper Horizn",
+      "expected": [
+        "M16"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M16"
+      ],
+      "result_titles": [
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Copper Horizon"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": [
+          {
+            "typed": "copper horizn",
+            "used": "Copper Horizon",
+            "kind": "title",
+            "method": "edit"
+          }
+        ]
+      },
+      "clarification": null,
+      "notes": [
+        "Showing results for \"Copper Horizon\" (you typed \"copper horizn\")."
+      ],
+      "debug": {
+        "trace": [
+          "title: Copper Horizon",
+          "mode=title terms=[] dense=''",
+          "autocorrect title 'copper horizn' -> 'Copper Horizon' (edit)"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 3.2
+      },
+      "wall_ms": 4.721,
+      "generation": 9
+    },
+    {
+      "query": "Copper Horizon",
+      "expected": [
+        "M16"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M16"
+      ],
+      "result_titles": [
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Copper Horizon"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Copper Horizon",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.0
+      },
+      "wall_ms": 3.242,
+      "generation": 9
+    },
+    {
+      "query": "Quiet Lake",
+      "expected": [
+        "M28"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M28"
+      ],
+      "result_titles": [
+        "The Quiet Lake"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: The Quiet Lake"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: The Quiet Lake",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.9
+      },
+      "wall_ms": 3.421,
+      "generation": 9
+    },
+    {
+      "query": "\"The Gift\"",
+      "expected": [
+        "M20"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M20"
+      ],
+      "result_titles": [
+        "The Gift"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: The Gift"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: The Gift",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.7
+      },
+      "wall_ms": 3.261,
+      "generation": 9
+    },
+    {
+      "query": "Nila",
+      "expected": [
+        "M25"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M25"
+      ],
+      "result_titles": [
+        "Nila"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Nila"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Nila",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.9
+      },
+      "wall_ms": 3.11,
+      "generation": 9
+    },
+    {
+      "query": "Aster Voyage",
+      "expected": [
+        "M23"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M23"
+      ],
+      "result_titles": [
+        "Aster Voyage"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Aster Voyage"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Aster Voyage",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.8
+      },
+      "wall_ms": 4.201,
+      "generation": 9
+    },
+    {
+      "query": "play High",
+      "expected": [
+        "M27"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M27"
+      ],
+      "result_titles": [
+        "High Tide"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: High Tide"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'high' -> High Tide",
+          "title: High Tide",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.9
+      },
+      "wall_ms": 3.13,
+      "generation": 9
+    },
+    {
+      "query": "play Family",
+      "expected": [
+        "M21"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M21"
+      ],
+      "result_titles": [
+        "Family Secrets"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Family Secrets"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title fragment 'family' -> Family Secrets",
+          "title: Family Secrets",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.02,
+        "total": 2.8
+      },
+      "wall_ms": 4.067,
+      "generation": 9
+    },
+    {
+      "query": "Starfall",
+      "expected": [
+        "M26"
+      ],
+      "group": "titles",
+      "mode": null,
+      "kinds": [
+        "title"
+      ],
+      "forbidden": [],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M26"
+      ],
+      "result_titles": [
+        "Starfall"
+      ],
+      "first_relevant_rank": 1,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "title",
+        "filters": [
+          "title: Starfall"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "title: Starfall",
+          "mode=title terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 1.5
+      },
+      "wall_ms": 2.711,
+      "generation": 9
+    },
+    {
+      "query": "a man finds the gift in a village",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M20",
+        "M11",
+        "M10",
+        "M05",
+        "M03",
+        "M09",
+        "M19",
+        "M14",
+        "M04",
+        "M22",
+        "M17",
+        "M08",
+        "M24",
+        "M07",
+        "M28",
+        "M18",
+        "M02",
+        "M15",
+        "M12",
+        "M13",
+        "M23",
+        "M27",
+        "M25",
+        "M06",
+        "M01",
+        "M16",
+        "M26",
+        "M21"
+      ],
+      "result_titles": [
+        "The Gift",
+        "Moonlit Letters",
+        "Ka",
+        "Abhinethri",
+        "Bhairava",
+        "2",
+        "Moonlit Roads",
+        "Winter Lantern",
+        "OP 2",
+        "Thalapathy",
+        "Amber Station",
+        "Highway",
+        "Aster Valley",
+        "Inthi Ninna Preethiya",
+        "The Quiet Lake",
+        "Silver Orchard",
+        "Parimala and Co",
+        "Distant Shores",
+        "River of Courage",
+        "Silent Harbour",
+        "Aster Voyage",
+        "High Tide",
+        "Nila",
+        "Veerame Vaigai Soodum",
+        "Parasakthi – Uncensored Version",
+        "Copper Horizon",
+        "Starfall",
+        "Family Secrets"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "man",
+          "finds",
+          "gift",
+          "village"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "mode=mixed terms=['man', 'finds', 'gift', 'village'] dense='man finds the gift in a village'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": null
+      },
+      "timings_ms": {
+        "embed": 29.2,
+        "retrieve": 33.42,
+        "total": 40.3
+      },
+      "wall_ms": 46.107,
+      "generation": 9
+    },
+    {
+      "query": "a child is kidnapped",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title",
+        "actor",
+        "character",
+        "director"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M21",
+        "M01",
+        "M04",
+        "M03",
+        "M10",
+        "M12",
+        "M28",
+        "M17",
+        "M11",
+        "M05",
+        "M25",
+        "M18",
+        "M02",
+        "M19",
+        "M23",
+        "M13",
+        "M06",
+        "M09",
+        "M08",
+        "M22",
+        "M26",
+        "M07",
+        "M15",
+        "M14",
+        "M27",
+        "M20",
+        "M24",
+        "M16"
+      ],
+      "result_titles": [
+        "Family Secrets",
+        "Parasakthi – Uncensored Version",
+        "OP 2",
+        "Bhairava",
+        "Ka",
+        "River of Courage",
+        "The Quiet Lake",
+        "Amber Station",
+        "Moonlit Letters",
+        "Abhinethri",
+        "Nila",
+        "Silver Orchard",
+        "Parimala and Co",
+        "Moonlit Roads",
+        "Aster Voyage",
+        "Silent Harbour",
+        "Veerame Vaigai Soodum",
+        "2",
+        "Highway",
+        "Thalapathy",
+        "Starfall",
+        "Inthi Ninna Preethiya",
+        "Distant Shores",
+        "Winter Lantern",
+        "High Tide",
+        "The Gift",
+        "Aster Valley",
+        "Copper Horizon"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "child",
+          "kidnapped"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "mode=mixed terms=['child', 'kidnapped'] dense='child is kidnapped'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": null
+      },
+      "timings_ms": {
+        "embed": 22.1,
+        "retrieve": 26.02,
+        "total": 29.2
+      },
+      "wall_ms": 35.451,
+      "generation": 9
+    },
+    {
+      "query": "a woman named Parimala rescues a child",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M07"
+      ],
+      "result_titles": [
+        "Inthi Ninna Preethiya"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "character: Parimala"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "woman",
+          "named",
+          "rescues",
+          "child"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "character: Parimala",
+          "mode=mixed terms=['woman', 'named', 'rescues', 'child'] dense='woman named rescues a child'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "embed": 31.7,
+        "retrieve": 37.98,
+        "total": 49.5
+      },
+      "wall_ms": 51.09,
+      "generation": 9
+    },
+    {
+      "query": "a superstar saves a village",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "actor"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M10",
+        "M26",
+        "M09",
+        "M16",
+        "M08",
+        "M04",
+        "M02",
+        "M25",
+        "M12",
+        "M01",
+        "M03",
+        "M24",
+        "M19",
+        "M07",
+        "M05",
+        "M15",
+        "M13",
+        "M18",
+        "M17",
+        "M28",
+        "M23",
+        "M11",
+        "M14",
+        "M22",
+        "M27",
+        "M06",
+        "M21",
+        "M20"
+      ],
+      "result_titles": [
+        "Ka",
+        "Starfall",
+        "2",
+        "Copper Horizon",
+        "Highway",
+        "OP 2",
+        "Parimala and Co",
+        "Nila",
+        "River of Courage",
+        "Parasakthi – Uncensored Version",
+        "Bhairava",
+        "Aster Valley",
+        "Moonlit Roads",
+        "Inthi Ninna Preethiya",
+        "Abhinethri",
+        "Distant Shores",
+        "Silent Harbour",
+        "Silver Orchard",
+        "Amber Station",
+        "The Quiet Lake",
+        "Aster Voyage",
+        "Moonlit Letters",
+        "Winter Lantern",
+        "Thalapathy",
+        "High Tide",
+        "Veerame Vaigai Soodum",
+        "Family Secrets",
+        "The Gift"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "superstar",
+          "saves",
+          "village"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "mode=mixed terms=['superstar', 'saves', 'village'] dense='superstar saves a village'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": null
+      },
+      "timings_ms": {
+        "embed": 25.6,
+        "retrieve": 31.24,
+        "total": 40.4
+      },
+      "wall_ms": 46.177,
+      "generation": 9
+    },
+    {
+      "query": "a highway robbery",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M08",
+        "M21",
+        "M19",
+        "M20",
+        "M12",
+        "M01",
+        "M03",
+        "M04",
+        "M10",
+        "M16",
+        "M17",
+        "M11",
+        "M22",
+        "M27",
+        "M05",
+        "M15",
+        "M26",
+        "M28",
+        "M09",
+        "M02",
+        "M24",
+        "M13",
+        "M14",
+        "M18",
+        "M25",
+        "M23",
+        "M06",
+        "M07"
+      ],
+      "result_titles": [
+        "Highway",
+        "Family Secrets",
+        "Moonlit Roads",
+        "The Gift",
+        "River of Courage",
+        "Parasakthi – Uncensored Version",
+        "Bhairava",
+        "OP 2",
+        "Ka",
+        "Copper Horizon",
+        "Amber Station",
+        "Moonlit Letters",
+        "Thalapathy",
+        "High Tide",
+        "Abhinethri",
+        "Distant Shores",
+        "Starfall",
+        "The Quiet Lake",
+        "2",
+        "Parimala and Co",
+        "Aster Valley",
+        "Silent Harbour",
+        "Winter Lantern",
+        "Silver Orchard",
+        "Nila",
+        "Aster Voyage",
+        "Veerame Vaigai Soodum",
+        "Inthi Ninna Preethiya"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "robbery",
+          "highway"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "mode=mixed terms=['robbery', 'highway'] dense='highway robbery'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": null
+      },
+      "timings_ms": {
+        "embed": 21.0,
+        "retrieve": 26.56,
+        "total": 30.5
+      },
+      "wall_ms": 36.208,
+      "generation": 9
+    },
+    {
+      "query": "a high speed chase",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M27",
+        "M03",
+        "M26",
+        "M16",
+        "M08",
+        "M12",
+        "M23",
+        "M19",
+        "M04",
+        "M24",
+        "M02",
+        "M15",
+        "M01",
+        "M21",
+        "M14",
+        "M17",
+        "M09",
+        "M06",
+        "M13",
+        "M11",
+        "M22",
+        "M10",
+        "M05",
+        "M25",
+        "M18",
+        "M28",
+        "M07",
+        "M20"
+      ],
+      "result_titles": [
+        "High Tide",
+        "Bhairava",
+        "Starfall",
+        "Copper Horizon",
+        "Highway",
+        "River of Courage",
+        "Aster Voyage",
+        "Moonlit Roads",
+        "OP 2",
+        "Aster Valley",
+        "Parimala and Co",
+        "Distant Shores",
+        "Parasakthi – Uncensored Version",
+        "Family Secrets",
+        "Winter Lantern",
+        "Amber Station",
+        "2",
+        "Veerame Vaigai Soodum",
+        "Silent Harbour",
+        "Moonlit Letters",
+        "Thalapathy",
+        "Ka",
+        "Abhinethri",
+        "Nila",
+        "Silver Orchard",
+        "The Quiet Lake",
+        "Inthi Ninna Preethiya",
+        "The Gift"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [
+          "speed",
+          "chase",
+          "high"
+        ],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "mode=mixed terms=['speed', 'chase', 'high'] dense='high speed chase'"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": null
+      },
+      "timings_ms": {
+        "embed": 22.9,
+        "retrieve": 26.78,
+        "total": 33.1
+      },
+      "wall_ms": 39.03,
+      "generation": 9
+    },
+    {
+      "query": "family films",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M21"
+      ],
+      "result_titles": [
+        "Family Secrets"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "ok",
+      "interpretation": {
+        "mode": "browse",
+        "filters": [
+          "genre: family",
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [],
+      "debug": {
+        "trace": [
+          "genre: family",
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [],
+        "allowed": 1
+      },
+      "timings_ms": {
+        "retrieve": 0.01,
+        "total": 2.2
+      },
+      "wall_ms": 3.627,
+      "generation": 9
+    },
+    {
+      "query": "feel-good movies",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [
+        "title"
+      ],
+      "clarify": false,
+      "passed": true,
+      "failures": [],
+      "result_ids": [
+        "M27",
+        "M11",
+        "M22",
+        "M12",
+        "M10",
+        "M14",
+        "M19",
+        "M23",
+        "M20",
+        "M04",
+        "M07",
+        "M28",
+        "M05",
+        "M24",
+        "M15",
+        "M02",
+        "M25",
+        "M17",
+        "M09",
+        "M18",
+        "M08",
+        "M16",
+        "M26",
+        "M01",
+        "M06",
+        "M13",
+        "M03",
+        "M21"
+      ],
+      "result_titles": [
+        "High Tide",
+        "Moonlit Letters",
+        "Thalapathy",
+        "River of Courage",
+        "Ka",
+        "Winter Lantern",
+        "Moonlit Roads",
+        "Aster Voyage",
+        "The Gift",
+        "OP 2",
+        "Inthi Ninna Preethiya",
+        "The Quiet Lake",
+        "Abhinethri",
+        "Aster Valley",
+        "Distant Shores",
+        "Parimala and Co",
+        "Nila",
+        "Amber Station",
+        "2",
+        "Silver Orchard",
+        "Highway",
+        "Copper Horizon",
+        "Starfall",
+        "Parasakthi – Uncensored Version",
+        "Veerame Vaigai Soodum",
+        "Silent Harbour",
+        "Bhairava",
+        "Family Secrets"
+      ],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "approximate",
+      "interpretation": {
+        "mode": "catalog",
+        "filters": [
+          "content_type: movie"
+        ],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": null,
+      "notes": [
+        "\"feel good\" is a descriptive preference, searched using plot/theme evidence; it is not a verified mood or suitability label.",
+        "These results are supported by semantic similarity only; no lexical match was found."
+      ],
+      "debug": {
+        "trace": [
+          "content_type: movie",
+          "mode=browse terms=[] dense=''"
+        ],
+        "channels": [
+          "catalog_lex",
+          "catalog_dense"
+        ],
+        "allowed": 28
+      },
+      "timings_ms": {
+        "embed": 30.4,
+        "retrieve": 34.69,
+        "total": 36.7
+      },
+      "wall_ms": 42.072,
+      "generation": 9
+    },
+    {
+      "query": "movies starring Unknown Person",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "unknown_name",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 6.3
+      },
+      "wall_ms": 7.519,
+      "generation": 9
+    },
+    {
+      "query": "movies directed by Unknown Person",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "unknown_name",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 5.0
+      },
+      "wall_ms": 6.114,
+      "generation": 9
+    },
+    {
+      "query": "scene where a child escapes",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "unsupported_scene",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 0.7
+      },
+      "wall_ms": 1.821,
+      "generation": 9
+    },
+    {
+      "query": "original language Tamil movies",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "unsupported_original_language",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 0.6
+      },
+      "wall_ms": 1.632,
+      "generation": 9
+    },
+    {
+      "query": "safe for kids",
+      "expected": null,
+      "group": "safety",
+      "mode": null,
+      "kinds": null,
+      "forbidden": [],
+      "clarify": true,
+      "passed": true,
+      "failures": [],
+      "result_ids": [],
+      "result_titles": [],
+      "first_relevant_rank": null,
+      "http_status": 200,
+      "status": "needs_clarification",
+      "interpretation": {
+        "mode": "clarify",
+        "filters": [],
+        "years": null,
+        "sort": null,
+        "limit": null,
+        "terms": [],
+        "phrase": null,
+        "corrections": []
+      },
+      "clarification": {
+        "reason": "unsupported_suitability",
+        "suggestions": []
+      },
+      "notes": [],
+      "debug": null,
+      "timings_ms": {
+        "total": 0.4
+      },
+      "wall_ms": 1.415,
+      "generation": 9
+    }
+  ],
+  "negative_controls": {
+    "scope": "Only Highway exists; neither query has word-level evidence",
+    "readiness": {
+      "status": "ready",
+      "schema": "schema_v2_large",
+      "generation": 10,
+      "assets": 1,
+      "documents": 1,
+      "actor_aliases": 0,
+      "lexicon_words": 8,
+      "dense": true,
+      "dense_reason": null,
+      "embedding_model": "bge-small-en-v1.5",
+      "dense_calibrated": false,
+      "date_basis": "ZEE5 release",
+      "language_basis": "available audio tracks",
+      "scenes": false,
+      "dialogue": false
+    },
+    "summary": {
+      "passed": 0,
+      "total": 2,
+      "finite_set_queries": 2,
+      "true_positive": 0,
+      "false_positive": 2,
+      "false_negative": 0,
+      "micro_precision": 0.0,
+      "micro_recall": 0.0,
+      "reciprocal_rank": 0.0,
+      "scope": "finite-set relevance only for labelled title/person queries; narrative cases check filter safety"
+    },
+    "cases": [
+      {
+        "query": "quuxnonsense",
+        "expected": [],
+        "group": "negative_control",
+        "mode": null,
+        "kinds": null,
+        "forbidden": [
+          "title"
+        ],
+        "clarify": "optional",
+        "passed": false,
+        "failures": [
+          "results"
+        ],
+        "result_ids": [
+          "M08"
+        ],
+        "result_titles": [
+          "Highway"
+        ],
+        "first_relevant_rank": null,
+        "http_status": 200,
+        "status": "approximate",
+        "interpretation": {
+          "mode": "catalog",
+          "filters": [],
+          "years": null,
+          "sort": null,
+          "limit": null,
+          "terms": [
+            "quuxnonsense"
+          ],
+          "phrase": null,
+          "corrections": []
+        },
+        "clarification": null,
+        "notes": [
+          "These results are supported by semantic similarity only; no lexical match was found."
+        ],
+        "debug": {
+          "trace": [
+            "mode=mixed terms=['quuxnonsense'] dense='quuxnonsense'"
+          ],
+          "channels": [
+            "catalog_lex",
+            "catalog_dense"
+          ],
+          "allowed": null
+        },
+        "timings_ms": {
+          "embed": 51.3,
+          "retrieve": 69.44,
+          "total": 71.4
+        },
+        "wall_ms": 73.046,
+        "generation": 10
+      },
+      {
+        "query": "high",
+        "expected": [],
+        "group": "negative_control",
+        "mode": null,
+        "kinds": null,
+        "forbidden": [
+          "title"
+        ],
+        "clarify": "optional",
+        "passed": false,
+        "failures": [
+          "results"
+        ],
+        "result_ids": [
+          "M08"
+        ],
+        "result_titles": [
+          "Highway"
+        ],
+        "first_relevant_rank": null,
+        "http_status": 200,
+        "status": "approximate",
+        "interpretation": {
+          "mode": "catalog",
+          "filters": [],
+          "years": null,
+          "sort": null,
+          "limit": null,
+          "terms": [
+            "high"
+          ],
+          "phrase": null,
+          "corrections": []
+        },
+        "clarification": null,
+        "notes": [
+          "These results are supported by semantic similarity only; no lexical match was found."
+        ],
+        "debug": {
+          "trace": [
+            "mode=mixed terms=['high'] dense='high'"
+          ],
+          "channels": [
+            "catalog_lex",
+            "catalog_dense"
+          ],
+          "allowed": null
+        },
+        "timings_ms": {
+          "embed": 19.9,
+          "retrieve": 24.37,
+          "total": 26.2
+        },
+        "wall_ms": 27.854,
+        "generation": 10
+      }
+    ]
+  },
+  "restored_import": {
+    "schema": "schema_v2_large",
+    "assets": 28,
+    "aliases": 21,
+    "alias_groups_absent_from_cast": [
+      "Kamal Haasan",
+      "Nayanthara",
+      "Shah Rukh Khan",
+      "Vadivelu"
+    ],
+    "missing_plot": 0,
+    "missing_audio_languages": 0,
+    "missing_original_release_date": 28,
+    "released_date_kind": "platform",
+    "audio_languages": [
+      "ENGLISH",
+      "HINDI",
+      "TAMIL"
+    ],
+    "full_snapshot_replacement": true,
+    "documents": 28,
+    "embedded": 0,
+    "reused": 28,
+    "corpus_sha256": "71276d0951417519d51f567917fb8dc982e7bd8786c2ac7043e5b285c1492afe",
+    "max_tokens": 27,
+    "lexical_only": false,
+    "aliases_sha256": "dd657c96f6cacfb5d2b4abeebcff121557fe578f82eb835149b2c5b016518a69",
+    "generation_id": 11,
+    "activated": true,
+    "seconds": 0.137
+  }
+}

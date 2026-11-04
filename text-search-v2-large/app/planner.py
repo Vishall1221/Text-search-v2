@@ -19,6 +19,7 @@ from datetime import date
 
 from app.dates import YearRange, extract_years
 from app.gazetteer import KIND_PRIORITY, Candidate, Catalog, Entity, Span
+from app.intent import role_context
 from app.operators import Operators, extract_operators, negation_cue_at
 from app.text import fold, normalize, osa_distance, scrub_pii, singularize
 from app.vocab import (ACTOR_CUES, AMBIGUOUS_CONTENT_WORDS, AMBIGUOUS_NEXT_OK, BY_CUES, CATALOG_MARKERS, CATALOG_PHRASES, COMMAND_WORDS, CONNECTORS,
@@ -37,7 +38,8 @@ NEG_FILLER = {"the", "a", "an", "any", "of", "movies", "movie", "films", "film",
               "ones", "one", "in", "language", "languages", "titles", "genre", "genres", "very", "too", "really"}
 PERSON_CUE_WORDS = ACTOR_CUES | DIRECTOR_CUES | BY_CUES
 # Cues that make a person slot an explicit request. "stars", "features", "cast" are usually narrative.
-EXPLICIT_PERSON_CUES = {"starring", "starred", "featuring", "actor", "actress", "director", "directed"}
+EXPLICIT_PERSON_CUES = {"starring", "starred", "featuring", "actor", "actress", "director", "directed",
+                        "character", "characters", "role", "roles", "title", "titled"}
 NARRATIVE_DETERMINERS = {"the", "a", "an", "his", "her", "their", "its", "my", "our", "your", "this", "that", "co"}
 CONNECTOR_TOKENS = CONNECTORS | {COMMA}
 MARKER_TOKENS = (SCENE_MARKERS | CATALOG_MARKERS | DIALOGUE_MARKERS)
@@ -196,11 +198,30 @@ def select_spans(tokens: list[str], catalog: Catalog, whole_query_ok: bool,
     facet_starts = {c.start for c in cands if any(e.kind != "content_type" for e in c.entities)}
     for sp in cands:
         ents = sp.entities
+        role,_ = role_context(tokens,sp.start)
+        if role:
+            ents = [e for e in ents if e.kind == role]
+        elif (any(t in CONTENT_TYPE_WORDS for t in tokens)
+              and not any(t in {'play','watch','title','titled'} for t in tokens)
+              and any(e.kind == 'actor' for e in ents)):
+            # A filmography-style listing disambiguates an actor from a film
+            # of the same name. Bare/play requests retain exact-title priority.
+            ents = [e for e in ents if e.kind == 'actor']
+        if not ents:
+            continue
+        numeric_title = False
         if sp.length == 1:
             tok = tokens[sp.start]
             if tok in NOISE and not whole_query_ok:
                 continue
-            if tok.startswith(QUOTE_TOKEN) or tok in (COMMA,) or tok.isdigit():
+            numeric_title = (any(e.kind == 'title' for e in ents)
+                             and (role == 'title' or
+                                  (not any(t in {'in','before','after','since','from','until','between','during','year'}
+                                           for t in tokens[:sp.start]) and
+                                   all(t in COMMAND_WORDS | {'me','please'} or t in CONTENT_TYPE_WORDS
+                                       or any(e.kind == 'language' for e in catalog.entities_for(t))
+                                       for t in tokens[:sp.start]+tokens[sp.end:]))))
+            if tok.startswith(QUOTE_TOKEN) or tok in (COMMA,) or (tok.isdigit() and not numeric_title):
                 continue
             if tok in ("show", "shows") and _is_show_verb(tokens, sp.start):
                 continue
@@ -230,7 +251,7 @@ def select_spans(tokens: list[str], catalog: Catalog, whole_query_ok: bool,
             words = [w for w in sp.phrase.split() if w not in {"the", "a", "an"}]
             distinctive = len(words) >= 2 and all(
                 catalog.df(w) / catalog.doc_total < 0.05 for w in words if not w.isdigit())
-            if not request_only and not explicit and not distinctive and sp.match != 'title_fragment':
+            if not request_only and not explicit and not distinctive and sp.match != 'title_fragment' and not numeric_title:
                 kept = [e for e in kept if e.kind != "title"]
         if not kept:
             continue
@@ -261,7 +282,7 @@ def _base_plan_query(raw: str, catalog: Catalog, today: date | None = None, *, _
         plan.notes.append("Personal details were removed from the query before searching.")
 
     # --- trivial / conversational input ---------------------------------------------------
-    letters = re.sub(r"[^A-Za-z]", "", norm)
+    letters = ''.join(ch for ch in norm if ch.isalpha())
     if len(letters) < 2 and not quoted:
         plan.mode = "clarify"
         plan.clarification = Clarification("empty_query", "Tell me what to look for - a title, an actor, a genre, or "
@@ -364,6 +385,15 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
         j = i + k
         while j < n and tokens[j] in NEG_FILLER and not any(sp.start == j for sp in spans):
             consumed.add(j); j += 1
+        # Role introductions may contain several words ("character named",
+        # "actor called", "directed by"). Keep the exclusion attached to its
+        # typed name instead of treating these cue words as negative plot text.
+        for target in spans:
+            _,grammar = role_context(tokens,target.start)
+            if j in grammar and set(range(j,target.start)) <= grammar:
+                consumed |= grammar
+                j = target.start
+                break
         # "not starring X" / "without actor X" / "not directed by X": the person cue belongs to the name
         m = j
         while m < n and tokens[m] in PERSON_CUE_WORDS and not any(sp.start == m for sp in spans):
@@ -404,16 +434,11 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
 
     # --- person cues ("starring X", "directed by X") are consumed with the name ----------------------
     cues: dict[int, str] = {}
-    cue_words = (ACTOR_CUES | DIRECTOR_CUES) - {"with"}
     for sp in spans:
-        prev = tokens[sp.start - 1] if sp.start > 0 else ""
-        prev2 = tokens[sp.start - 2] if sp.start > 1 else ""
-        if prev in cue_words:
-            cues[sp.start] = "director" if prev in DIRECTOR_CUES else "actor"
-            consumed.add(sp.start - 1)
-        elif prev in BY_CUES and prev2 in DIRECTOR_CUES:
-            cues[sp.start] = "director"
-            consumed.update({sp.start - 1, sp.start - 2})
+        role,grammar = role_context(tokens,sp.start)
+        if role:
+            cues[sp.start] = role
+            consumed |= grammar
     no_director_data = catalog.coverage()["directors"] == 0
     if no_director_data:                       # "directed by <name>" cannot be applied: say so, drop the words
         for i, t in enumerate(tokens):
@@ -434,6 +459,10 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
     previous_kind: dict[str, tuple[int, Span]] = {}
     for sp in spans:
         ent = _pick_entities(sp, cues.get(sp.start))
+        if (ent[0].kind == 'actor' and all(e.via_alias for e in ent)
+                and len({e.norm for e in ent}) > 1):
+            return Clarification('ambiguous_name',f'"{sp.phrase}" refers to multiple actors. Which did you mean?',
+                                 sorted({e.canonical for e in ent}))
         neg = sp.start in negated_spans
         kind = _kind_of(ent)
         prior = previous_kind.get(kind)
@@ -477,14 +506,17 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
     # An explicit, unresolved cast/director slot is still a hard constraint.
     # It must not become a semantic description that searches every movie.
     for i, token in enumerate(tokens):
-        if token not in EXPLICIT_PERSON_CUES:
+        title_slot = token in CONTENT_TYPE_WORDS and i+1 < n and tokens[i+1] in {'called','named','titled'}
+        if token not in EXPLICIT_PERSON_CUES and not title_slot:
             continue
         # "the actress cries", "the director yells", "his co-star": a narrative noun, not a request slot
         if i > 0 and tokens[i - 1] in NARRATIVE_DETERMINERS:
             continue
         start = i + 1
-        if start < n and tokens[start] in BY_CUES:
+        while start < n and tokens[start] in BY_CUES | {'named','called','name'}:
             start += 1
+        role,_ = role_context(tokens,start)
+        role = role or ('director' if token in DIRECTOR_CUES else 'actor')
         if i in consumed and (start >= n or start in consumed):
             continue
         end = start
@@ -498,7 +530,7 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
             if result is not None:
                 return result
             phrase = " ".join(tokens[start:end])
-            return Clarification("unknown_name", f'I could not find the requested {"director" if token in DIRECTOR_CUES else "actor"} "{phrase}" in this catalog. Check the name or try another person.')
+            return Clarification("unknown_name", f'I could not find the requested {role} "{phrase}" in this catalog. Check the name or try another one.')
         if token in {"starring", "featuring", "directed"}:
             return Clarification("unknown_name", "Which actor or director should I look for?")
 
@@ -597,16 +629,13 @@ PERSON_KINDS = ("actor", "director", "character")
 
 
 def _pick_entities(sp: Span, cue: str | None = None) -> list[Entity]:
-    """Entities of the best-priority kind. Person names keep actor / director / character as
-    alternatives, narrowed by an explicit cue ("directed by", "starring")."""
+    """Choose one relationship, never union actor/director/character identities."""
     ents = sorted(sp.entities, key=lambda e: (KIND_PRIORITY[e.kind], e.norm))
     if cue:
-        narrowed = [e for e in ents if e.kind == cue or (cue == "actor" and e.kind == "character")]
-        if narrowed:
-            ents = narrowed
+        ents = [e for e in ents if e.kind == cue]
     best = ents[0].kind
-    if best in PERSON_KINDS:
-        return [e for e in ents if e.kind in PERSON_KINDS]
+    if best == 'actor' and any(e.kind == 'actor' and not e.via_alias for e in ents):
+        ents = [e for e in ents if e.kind != 'actor' or not e.via_alias]
     out: list[Entity] = []
     for e in ents:
         if e.kind == best and e not in out:
@@ -721,10 +750,23 @@ def _resolve_run(tokens: list[str], a: int, b: int, catalog: Catalog, residual_l
             words = tokens[s:s + size]
             phrase = " ".join(words)
             # A correctly spelled title the context guard set aside must not come back as "did you mean <itself>?"
-            cands = [c for c in _unique(catalog.fuzzy(phrase, max_dist=2))
+            role,_ = role_context(tokens,s)
+            listing = any(t in CONTENT_TYPE_WORDS for t in tokens) and not any(t in {'about','where','named'} for t in tokens)
+            cands = [c for c in _unique(catalog.fuzzy(phrase, max_dist=2,
+                        approximate_phonetic=role == 'actor' or (role is None and listing)))
                      if not (c.distance == 0 and c.entity.kind == "title" and not c.entity.partial)]
+            if role:
+                cands = [c for c in cands if c.entity.kind == role]
+            elif not catalog.title_context(tokens,s,s+size,catalog.entities_for(phrase)):
+                # Fuzzy entity recovery requires name-like request context;
+                # residual token count alone cannot distinguish a plot sentence.
+                cands = []
+            cands = [c for c in cands if not (c.entity.kind == 'title' and c.entity.partial
+                     and not catalog.title_context(tokens,s,s+size,catalog.entities_for(phrase)))]
             if not cands:
                 continue
+            best_kind = cands[0].entity.kind
+            cands = [c for c in cands if c.entity.kind == best_kind]
             unknown = [w for w in words if not catalog.knows_word(w)]
             best = cands[0]
             # the same string as a title and as a character is one candidate, not a conflict
@@ -740,7 +782,10 @@ def _resolve_run(tokens: list[str], a: int, b: int, catalog: Catalog, residual_l
             if best.distance == 0 and second is not None:             # ambiguous partial name
                 return _clarify_from(phrase, [c for c in cands if c.distance == 0], tokens, s, s + size, ambiguous=True)
             clear = second is None or second.distance > best.distance
-            if (clear and best.distance <= settings.autocorrect_max_edits and len(phrase) >= settings.autocorrect_min_length
+            alias_phonetic = (best.entity.via_alias and best.phonetic and best.distance <= 2
+                              and settings.autocorrect_max_edits >= 1
+                              and len(phrase) >= 7 and (role == 'actor' or listing))
+            if (clear and (best.distance <= settings.autocorrect_max_edits or alias_phonetic) and len(phrase) >= settings.autocorrect_min_length
                     and len(cands) >= 1 and best.distance >= 1):
                 canon = best.entity.norm.split()
                 return (tokens[:s] + canon + tokens[s + size:],
@@ -870,7 +915,13 @@ def plan_query(raw: str, catalog: Catalog, today: date | None = None, *, _depth:
     norm = normalize(re.sub(r"\[(?:email|phone|id)\]", " ", scrubbed))
     exact_title = any(e.kind == "title" for e in catalog.entities_for(norm))
     tokens = norm.split()
-    spans = catalog.find_spans(tokens)
+    if exact_title:
+        entities = [e for e in catalog.entities_for(norm) if e.kind == 'title']
+        plan = Plan(raw=raw,scrubbed=scrubbed,normalized=norm,mode='title',pii_scrubbed=pii,
+                    facets=[Facet(entities,surface=norm)])
+        _finalize(plan,catalog)
+        return plan
+    spans = select_spans(tokens,catalog,whole_query_ok=len(tokens)<=3)
     exact_title = exact_title or any(
         any(e.kind == 'title' for e in sp.entities)
         and all(t in NOISE or t in CONTENT_TYPE_WORDS for t in tokens[:sp.start]+tokens[sp.end:])
@@ -885,10 +936,6 @@ def plan_query(raw: str, catalog: Catalog, today: date | None = None, *, _depth:
         return clarify("unsupported_suitability", "Family genre does not establish child suitability. This catalog has no validated age/content suitability fields.")
     if re.search(r"\b(?:original language|originally in|not dubbed)\b", norm):
         return clarify("unsupported_original_language", "Only available audio languages are stored; original versus dubbed language is unknown.")
-    for sp in spans:
-        actor_names = {e.canonical for e in sp.entities if e.kind == 'actor' and e.via_alias}
-        if len(actor_names) > 1 and not any(not e.via_alias for e in sp.entities):
-            return clarify('ambiguous_name', f'"{sp.phrase}" refers to multiple actors. Which did you mean?', sorted(actor_names))
     # Protect observed names, genres and themes from preference rewriting.
     protected = set()
     for sp in spans:
