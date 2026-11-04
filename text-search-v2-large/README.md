@@ -69,10 +69,10 @@ the current catalog. Metadata serving uses only SELECTs/read-only transactions.
 
 ## Synonyms and preferences
 
-Edit [config/query_synonyms.json](config/query_synonyms.json) and restart. This is
-the single definition source for genre synonyms, preferences and lexical alternatives;
-app/vocab.py only imports/re-exports the genre mapping and retains grammar/operator
-rules. There is no second genre dictionary or override layer.
+Edit **[app/vocab.py](app/vocab.py)** and restart. It is the single source for
+`GENRE_SYNONYMS`, `MOOD_PREFERENCES`, and `LEXICAL_SYNONYM_GROUPS`. The lexical lookup
+map is generated from the groups in that same module. There is no separate JSON
+synonym registry or loader.
 
 The planner combines this editable vocabulary with names/categories dynamically
 loaded from the database. It does not automatically learn from queries. Existing V2 groups are retained.
@@ -112,7 +112,7 @@ python -m catalog_large.ingest --data "$MOVIES_JSON"
 
 Only use these commands for deliberate data updates. An import replaces the full
 catalog snapshot. Actor-alias changes require a complete reimport; query synonym
-configuration changes only require an application restart. Existing vector/text
+changes in app/vocab.py only require an application restart. Existing vector/text
 hashes are compatible; no rebuild is needed solely for this integration.
 
 ## API and diagnostics

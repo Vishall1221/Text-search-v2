@@ -98,11 +98,13 @@ included in the transfer package, while model weights and synthetic bulk data ar
 excluded. API startup is read-only and needs no data rebuild when the existing
 generation/model match.
 
-## Single-source vocabulary cleanup
+## Single-file vocabulary correction
 
-Genre definitions now live only in config/query_synonyms.json alongside mood
-preferences and lexical alternatives. app.synonyms loads the registry and
-app.vocab re-exports the generated mapping. The legacy fiction group was moved
-into the JSON to preserve behavior. All 81 database-independent tests passed,
-including fiction/science-fiction separation. DB/retrieval code did not change.
-Restart the app after pulling; no reimport is needed.
+All genre definitions, mood preferences and lexical alternative groups now live
+in app/vocab.py itself, as requested. The separate query_synonyms.json file and
+app.synonyms loader were removed. Planner and lexical retrieval import directly
+from app.vocab. Existing synonym values and behavior were preserved. Pull and
+restart the app; no database reimport is needed.
+
+The vocab.py-only version passed the full **94 Python tests**, including
+PostgreSQL integration and real BGE, on 4 November 2026.

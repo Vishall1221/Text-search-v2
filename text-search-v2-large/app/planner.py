@@ -863,7 +863,7 @@ def _channels(plan: Plan, profile: str | None) -> list[ChannelSpec]:
 
 # Catalog-only boundary around V2's deterministic planner.
 def plan_query(raw: str, catalog: Catalog, today: date | None = None, *, _depth: int = 0) -> Plan:
-    from app.synonyms import REGISTRY
+    from app.vocab import MOOD_PREFERENCES
     scrubbed, pii = scrub_pii(raw or "")
     norm = normalize(re.sub(r"\[(?:email|phone|id)\]", " ", scrubbed))
     exact_title = any(e.kind == "title" for e in catalog.entities_for(norm))
@@ -893,7 +893,7 @@ def plan_query(raw: str, catalog: Catalog, today: date | None = None, *, _depth:
         if any(e.kind in {'title','actor','character','director'} or catalog.assets_for(e) for e in sp.entities):
             protected.update(range(sp.start, sp.end))
     preferences, used = [], set()
-    for group in REGISTRY['preferences']:
+    for group in MOOD_PREFERENCES:
         for alias in sorted(group['aliases'], key=lambda x: -len(x.split())):
             words = normalize(alias).split()
             for start in range(len(tokens)-len(words)+1):

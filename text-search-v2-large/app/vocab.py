@@ -1,19 +1,69 @@
-"""Maintained English vocabulary for query understanding.
+"""Single source for maintained English query vocabulary.
 
-Catalog names (titles, actors, characters, genres, languages) come from DATA, not from
-this file. This file holds only the closed set of English *operators* and *aliases* the
-plan keeps as explicit language rules: negation, date and sort words, content-type nouns,
-scope markers and language aliases. Genre synonyms, mood preferences and lexical
-alternatives are defined only in config/query_synonyms.json and loaded by
-app.synonyms. GENRE_SYNONYMS is re-exported here for the existing planner imports.
-
-Vocabulary patterns here were adapted from the reference service (category word set,
-explicit-language regex, "top N"/rank extraction, similar/recommend cue words).
+Genre synonyms, descriptive mood preferences, lexical alternatives, content-type
+words, language aliases and grammar/operators are defined in this module.
+Catalog titles, people and observed metadata labels still come from the database.
+Edit this file and restart the app; no JSON synonym registry or loader is used.
 """
 
 from __future__ import annotations
 
-from app.synonyms import GENRE_SYNONYMS
+
+# --- genre synonyms (single definition source) --------------------------------------
+GENRE_SYNONYMS = {'family': {'family', 'family oriented', 'family drama'},
+ 'comedy': {'comedies', 'humour', 'humor', 'humorous', 'comedic', 'funny', 'comedy', 'comic'},
+ 'romance': {'love story', 'rom', 'romance', 'romances', 'romantic'},
+ 'thriller': {'thrillers', 'suspenseful', 'suspense', 'thriller'},
+ 'horror': {'scary', 'horror', 'spooky', 'haunted', 'horrors'},
+ 'science fiction': {'sci fi', 'science fiction', 'scifi'},
+ 'documentary': {'documentary', 'docu', 'documentaries'},
+ 'animation': {'cartoon', 'animated', 'cartoons', 'animation'},
+ 'biography': {'biopic', 'biographical', 'biography', 'biopics'},
+ 'action': {'action packed', 'action', 'actions'},
+ 'mystery': {'mysteries', 'whodunnit', 'mystery', 'whodunit'},
+ 'adventure': {'adventure', 'adventures'},
+ 'crime': {'crime', 'crimes'},
+ 'drama': {'drama', 'dramas'},
+ 'fiction': {'fiction'}}
+
+# --- descriptive preferences; these do not imply child suitability ------------------
+MOOD_PREFERENCES = [{'name': 'family',
+  'aliases': ['family', 'family oriented'],
+  'hints': ['family', 'relationships', 'reconciliation'],
+  'text': 'a story about family relationships and reconciliation'},
+ {'name': 'feel good',
+  'aliases': ['feel good', 'feelgood', 'heartwarming', 'uplifting', 'heart warming', 'comfort watch'],
+  'hints': ['hope', 'happiness', 'joy'],
+  'text': 'an uplifting heartwarming story of hope and happiness'},
+ {'name': 'lighthearted',
+  'aliases': ['lighthearted', 'light hearted', 'light watch', 'easy watch'],
+  'hints': ['humor', 'comedy', 'joy'],
+  'text': 'a lighthearted humorous story'},
+ {'name': 'emotional',
+  'aliases': ['emotional', 'tearjerker', 'tear jerker', 'moving story', 'touching story'],
+  'hints': ['grief', 'loss', 'love'],
+  'text': 'an emotional touching story of love and loss'},
+ {'name': 'friendship',
+  'aliases': ['friendship', 'friends bonding', 'bromance'],
+  'hints': ['friendship', 'loyalty', 'companionship'],
+  'text': 'a story about friendship loyalty and companionship'},
+ {'name': 'revenge',
+  'aliases': ['revenge', 'vengeance', 'getting even', 'get even'],
+  'hints': ['revenge', 'vengeance', 'retribution'],
+  'text': 'a story about revenge after betrayal'},
+ {'name': 'inspirational',
+  'aliases': ['inspirational', 'inspiring', 'motivational', 'underdog story'],
+  'hints': ['perseverance', 'courage', 'triumph'],
+  'text': 'an inspiring underdog story of perseverance and courage'}]
+
+# --- lexical OR alternatives --------------------------------------------------------
+LEXICAL_SYNONYM_GROUPS = [['kidnap', 'kidnapped', 'kidnapping', 'abduct', 'abducted', 'abduction'],
+ ['revenge', 'vengeance', 'retribution'],
+ ['heist', 'robbery', 'robberies'],
+ ['betrayal', 'betrayed', 'treachery'],
+ ['friendship', 'companionship'],
+ ['heartwarming', 'uplifting', 'feelgood']]
+LEXICAL_SYNONYMS = {word: group for group in LEXICAL_SYNONYM_GROUPS for word in group}
 
 # --- function words / filler that never carry search meaning -------------------------
 FUNCTION_WORDS = {
