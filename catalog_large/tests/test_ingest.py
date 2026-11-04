@@ -12,7 +12,7 @@ from catalog_large.source import build_aliases, normalize_movie, read_movies
 def movie(show_id='M1', actor='Vijay'):
     return {'show_id': show_id, 'title': 'Example '+show_id, 'content_type': 'movie',
             'plot_summary': 'A child is kidnapped. A detective rescues the child.',
-            'themes': ['Rescue', 'Family'], 'genre': 'Action', 'primary_language': 'Tamil',
+            'themes': ['Rescue', 'Family'], 'genre': 'Action',
             'AudioLanguages': ['Tamil', 'Hindi', 'tamil'], 'released_date': '2021-11-28',
             'primary_cast': [{'actor_name': actor, 'character_name': 'Arun'}],
             'supporting_cast': [{'actor_name': 'Vadivelu', 'character_name': None}],
@@ -28,7 +28,7 @@ def write(tmp_path, rows):
 def test_source_mapping_preserves_language_cast_and_date_meaning():
     raw = movie()
     m = normalize_movie(raw, 'movies.json')
-    assert m['primary_language'] == 'TAMIL'
+    assert 'primary_language' not in m
     assert m['audio_languages'] == ['TAMIL', 'HINDI']
     assert m['primary_cast'][0]['character_name'] == 'Arun'
     assert m['supporting_cast'][0]['character_name'] is None
@@ -43,9 +43,8 @@ def test_audio_string_and_no_inference_from_audio():
     raw = movie()
     raw['AudioLanguages'] = 'Tamil, Hindi | Telugu; Tamil'
     assert normalize_movie(raw, 'x')['audio_languages'] == ['TAMIL','HINDI','TELUGU']
-    del raw['primary_language']
     m = normalize_movie(raw, 'x')
-    assert m['primary_language'] is None
+    assert 'primary_language' not in m
     assert m['audio_languages'] == ['TAMIL','HINDI','TELUGU']
 
 
@@ -142,21 +141,21 @@ def test_catalog_only_passages_include_themes_and_fit_budget():
 
 def test_2000_movie_dry_run_needs_no_model_or_database(tmp_path):
     rows = [movie(f'M{i}') for i in range(2000)]
-    for row in rows:
-        row.pop('primary_language')
     path = write(tmp_path, rows)
     result = ingest(path, dry_run=True, url='invalid://must-not-connect')
     assert result['assets'] == 2000 and result['dry_run']
     assert result['aliases'] > 0 and result['released_date_kind'] == 'platform'
-    assert result['missing_primary_language'] == 2000
+    assert result['audio_languages'] == ['HINDI','TAMIL']
+    assert 'missing_primary_language' not in result
 
 
 @pytest.mark.parametrize('primary', [None, '', '   '])
-def test_unknown_primary_language_is_reported_not_inferred(tmp_path, primary):
+def test_legacy_primary_language_is_not_used(tmp_path, primary):
     raw = movie()
     raw['primary_language'] = primary
     raw['audio_languages'] = raw.pop('AudioLanguages')
     report = ingest(write(tmp_path, [raw]), dry_run=True)
-    assert report['missing_primary_language'] == 1
-    assert report['primary_languages'] == []
+    assert 'missing_primary_language' not in report
+    assert 'primary_languages' not in report
+    assert 'primary_language' not in normalize_movie(raw, 'x')
     assert report['missing_audio_languages'] == 0

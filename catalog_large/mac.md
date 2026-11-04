@@ -74,10 +74,10 @@ a folder of `.json` files. Folder imports read all top-level JSON files, so keep
 alias/config files outside that data folder. All movies are validated before
 database writes. UTF-8 and UTF-8 with BOM are accepted.
 
-Required fields: `show_id`, `title`, `content_type`. `primary_language` is optional:
-if absent, null or blank, it is stored as NULL and reported by the dry run.
-Available audio languages are preserved; primary language is never inferred from
-the first audio track. Other unknown metadata may also be null/absent. Each show_id must be unique across the entire
+Required fields: `show_id`, `title`, `content_type`. Language availability is
+stored only in `audio_languages` (a list). Both source spellings `audio_languages`
+and `AudioLanguages` are accepted. There is no primary-language field or inference
+in this version. Other unknown metadata may be null/absent. Each show_id must be unique across the entire
 input. Put multiple dubbed tracks in `AudioLanguages`/`audio_languages`; do not
 duplicate the movie record for each track. Lists are preferred; comma/semicolon/
 pipe/slash-separated strings are also accepted for languages/genres/directors.
@@ -189,6 +189,10 @@ FROM schema_v2_large.alias_snapshot
 WHERE generation_id=(SELECT generation_id FROM schema_v2_large.active_generation)
 ORDER BY actor_name, alias;
 ```
+
+When upgrading the first importer, schema initialization removes the obsolete
+`primary_language` column and its index from `schema_v2_large.asset_snapshot`.
+Original source JSON remains preserved in `source_metadata`. No other schema is changed.
 
 Other tables: `lexicon`, plus the two generation tables above. No scenes, dialogue
 transcripts or playback URIs are required. About 2,000 movies need not mean exactly

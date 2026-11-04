@@ -2,6 +2,10 @@
 
 Verified 4 November 2026 on Windows, Python 3.11.9, PostgreSQL 16 and pgvector 0.8.6.
 
+Current version: **audio languages only**. The earlier optional-primary-language
+fix recorded below is superseded. No primary-language column is present in the
+current schema.
+
 Scope: only the importer in `catalog_large/`, its fixed `schema_v2_large` DDL,
 actor/actress alias seeds, tests and documentation. No new search algorithm,
 in-memory loader, API routing or UI was implemented.
@@ -54,3 +58,9 @@ null and blank values, 2,000 audio-only records and an existing initial schema.
 
 The updated publish checkout passed all **28 focused tests**, including real
 BGE, on Windows with the disposable review database.
+
+## Audio-only version
+
+All 28 focused tests passed on Windows after removing primary language. This
+includes 2,000 multi-audio movie records, the legacy-column upgrade, and real
+BGE generation/reuse. The actual user export has not been supplied locally.

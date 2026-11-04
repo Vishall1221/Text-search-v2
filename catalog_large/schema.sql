@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS schema_v2_large.asset_snapshot (
     themes TEXT[] NOT NULL DEFAULT '{}',
     genres TEXT[] NOT NULL DEFAULT '{}',
     genres_norm TEXT[] NOT NULL DEFAULT '{}',
-    primary_language TEXT CHECK (primary_language<>''),
     audio_languages TEXT[] NOT NULL DEFAULT '{}',
     primary_cast JSONB NOT NULL DEFAULT '[]' CHECK (jsonb_typeof(primary_cast)='array'),
     supporting_cast JSONB NOT NULL DEFAULT '[]' CHECK (jsonb_typeof(supporting_cast)='array'),
@@ -54,8 +53,9 @@ CREATE TABLE IF NOT EXISTS schema_v2_large.asset_snapshot (
     ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (generation_id,show_id)
 );
--- Upgrade tables created by the initial importer. Unknown is NULL, never an audio-track guess.
-ALTER TABLE schema_v2_large.asset_snapshot ALTER COLUMN primary_language DROP NOT NULL;
+-- This catalog uses available audio tracks only. Source JSON remains in source_metadata.
+-- Upgrade earlier versions; PostgreSQL also removes the obsolete column's index.
+ALTER TABLE schema_v2_large.asset_snapshot DROP COLUMN IF EXISTS primary_language;
 
 -- Nicknames refer ONLY to actors/actresses found in this generation's cast.
 -- No movie aliases and no substring matching of canonical actor names.
@@ -90,7 +90,6 @@ CREATE INDEX IF NOT EXISTS large_doc_lex_idx ON schema_v2_large.search_doc USING
 CREATE INDEX IF NOT EXISTS large_doc_hash_idx ON schema_v2_large.search_doc(text_hash);
 CREATE INDEX IF NOT EXISTS large_actor_idx ON schema_v2_large.asset_snapshot USING GIN(cast_norm);
 CREATE INDEX IF NOT EXISTS large_audio_idx ON schema_v2_large.asset_snapshot USING GIN(audio_languages);
-CREATE INDEX IF NOT EXISTS large_language_idx ON schema_v2_large.asset_snapshot(generation_id,primary_language);
 CREATE TABLE IF NOT EXISTS schema_v2_large.lexicon (
     generation_id BIGINT NOT NULL REFERENCES schema_v2_large.generation ON DELETE CASCADE,
     word TEXT NOT NULL,

@@ -17,7 +17,7 @@ database; V2 manages its own `search_v2` schema and does not modify V1's origina
 For approximately 2,000 movie metadata records without scenes or transcripts, see
 **[the catalog-only Mac guide](catalog_large/mac.md)**. This separate importer
 creates six tables in `schema_v2_large` in your existing database. It preserves
-primary language separately from available audio tracks, primary/supporting cast
+multiple available audio languages per movie (no primary-language field), primary/supporting cast
 relationships, themes and actor/actress aliases. `released_date` means ZEE5 arrival
 for this importer; genuine original release dates remain separate.
 
