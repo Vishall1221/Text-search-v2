@@ -70,8 +70,12 @@ the current catalog. Metadata serving uses only SELECTs/read-only transactions.
 ## Synonyms and preferences
 
 Edit [config/query_synonyms.json](config/query_synonyms.json) and restart. This is
-an explicit editable vocabulary plus names/categories dynamically loaded from the
-database, not automatic learning from queries. Existing V2 groups are retained.
+the single definition source for genre synonyms, preferences and lexical alternatives;
+app/vocab.py only imports/re-exports the genre mapping and retains grammar/operator
+rules. There is no second genre dictionary or override layer.
+
+The planner combines this editable vocabulary with names/categories dynamically
+loaded from the database. It does not automatically learn from queries. Existing V2 groups are retained.
 New groups include family, funny/comedy, love story/romance, animation, biography,
 and documentary; descriptive preferences include feel-good, heartwarming, uplifting,
 lighthearted, friendship, revenge, emotional and inspirational wording.

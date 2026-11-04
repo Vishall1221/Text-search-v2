@@ -13,7 +13,8 @@
     "mystery": ["mystery", "mysteries", "whodunit", "whodunnit"],
     "adventure": ["adventure", "adventures"],
     "crime": ["crime", "crimes"],
-    "drama": ["drama", "dramas"]
+    "drama": ["drama", "dramas"],
+    "fiction": ["fiction"]
   },
   "preferences": [
     {"name":"family", "aliases":["family","family oriented"], "hints":["family","relationships","reconciliation"], "text":"a story about family relationships and reconciliation"},

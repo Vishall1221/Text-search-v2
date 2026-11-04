@@ -3,13 +3,17 @@
 Catalog names (titles, actors, characters, genres, languages) come from DATA, not from
 this file. This file holds only the closed set of English *operators* and *aliases* the
 plan keeps as explicit language rules: negation, date and sort words, content-type nouns,
-scene/catalog scope markers and a few genre/language synonyms.
+scope markers and language aliases. Genre synonyms, mood preferences and lexical
+alternatives are defined only in config/query_synonyms.json and loaded by
+app.synonyms. GENRE_SYNONYMS is re-exported here for the existing planner imports.
 
 Vocabulary patterns here were adapted from the reference service (category word set,
 explicit-language regex, "top N"/rank extraction, similar/recommend cue words).
 """
 
 from __future__ import annotations
+
+from app.synonyms import GENRE_SYNONYMS
 
 # --- function words / filler that never carry search meaning -------------------------
 FUNCTION_WORDS = {
@@ -88,20 +92,6 @@ LANGUAGE_ALIASES = {
 LANGUAGE_NON_FILTER_FOLLOWERS = {"subtitle", "subtitles", "subtitled", "sub", "subs", "dub", "dubbed",
                                  "dubbing", "captions", "caption"}
 
-# --- genres: synonym groups (each word -> words that mean the same genre) -----------------
-GENRE_SYNONYMS = {
-    "romance": {"romance", "romantic", "romances", "rom"},
-    "comedy": {"comedy", "comedies", "comic", "comedic"},
-    "thriller": {"thriller", "thrillers", "suspense", "suspenseful"},
-    "horror": {"horror", "horrors", "scary", "spooky", "haunted"},
-    "action": {"action", "actions"},
-    "drama": {"drama", "dramas"},
-    "mystery": {"mystery", "mysteries", "whodunit"},
-    "crime": {"crime", "crimes"},
-    "adventure": {"adventure", "adventures"},
-    "science fiction": {"scifi", "sci fi", "science fiction"},
-    "fiction": {"fiction"},
-}
 # Genre word directly followed by one of these describes a SCENE ("action scene"), not a genre.
 GENRE_SCENE_FOLLOWERS = SCENE_MARKERS
 
@@ -147,5 +137,3 @@ SIMILAR_CUES = [("similar", "to"), ("similar", "like"), ("more", "like"), ("movi
 # Audio availability is the only language concept in this catalog.
 NOISE |= {"audio", "dubbed", "dubbing", "language", "languages", "version"}
 LANGUAGE_NON_FILTER_FOLLOWERS -= {'dub','dubbed','dubbing','audio','version'}
-from app.synonyms import REGISTRY
-GENRE_SYNONYMS.update({name: set(values) for name, values in REGISTRY['genres'].items()})

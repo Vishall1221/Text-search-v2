@@ -98,3 +98,11 @@ def test_negated_soft_preference_does_not_turn_positive(catalog):
 def test_absent_genres_in_plot_narratives_stay_words(catalog):
     p=plan('a movie about an adventure in a jungle',catalog)
     assert p.empty_reason is None and 'adventure' in p.terms
+
+def test_fiction_kept_separate_from_science_fiction_after_registry_move(catalog):
+    from dataclasses import replace
+    from app.gazetteer import Catalog
+    period=replace(catalog.assets['F5'],genres=['Period Fiction'],genres_norm=['period fiction'])
+    cat=Catalog([period],doc_total=40)
+    assert plan('fiction movies',cat).allowed=={'F5'}
+    assert plan('sci fi movies',cat).allowed==set()

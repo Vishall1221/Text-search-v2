@@ -97,3 +97,12 @@ Runtime evidence is in ignored `runtime/verification/`; source/tests/docs are
 included in the transfer package, while model weights and synthetic bulk data are
 excluded. API startup is read-only and needs no data rebuild when the existing
 generation/model match.
+
+## Single-source vocabulary cleanup
+
+Genre definitions now live only in config/query_synonyms.json alongside mood
+preferences and lexical alternatives. app.synonyms loads the registry and
+app.vocab re-exports the generated mapping. The legacy fiction group was moved
+into the JSON to preserve behavior. All 81 database-independent tests passed,
+including fiction/science-fiction separation. DB/retrieval code did not change.
+Restart the app after pulling; no reimport is needed.
