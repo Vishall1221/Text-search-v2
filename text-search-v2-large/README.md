@@ -56,6 +56,22 @@ LRU and cancellation ownership are inherited from V2. Each request pins its
 generation for filters and retrieval, including when another request refreshes
 the current catalog. Metadata serving uses only SELECTs/read-only transactions.
 
+## Title priority
+
+A complete title wins first. For a concise title/listing request, contiguous
+whole-word fragments of a title also count as title candidates, ahead of an
+incidental character or cast-name match. A word-to-title posting index is built
+from the active catalog; requests intersect those postings rather than scanning
+all movie records. There are no movie-specific exceptions or suffix rules.
+
+Explicit person requests preserve their person meaning. Known genre/language/theme
+queries and ordinary plot descriptions retain their existing behavior. Common-word
+checks account for words already occurring in titles and do not demote a known
+person name below a competing partial title. If several titles match, they remain
+alternatives rather than selecting an arbitrary winner. Debug traces record the
+selected title-fragment match. Pull this code and restart; no data reimport,
+title rename or embedding rebuild is required for this priority correction.
+
 ## Language and date semantics
 
 - `Tamil movies`: movies with Tamil in `audio_languages`.

@@ -6,8 +6,9 @@ after ``catalog_cache_seconds``.
 
 Entity resolution, in the order the planner uses it:
   1. exact longest-span match on the normalised phrase,
-  2. transliteration-skeleton match (``raktha vajram`` == ``rakta vajram``),
-  3. fuzzy candidates: shared trigrams -> bounded OSA edit distance.
+  2. indexed whole-word title fragments in a title/listing request,
+  3. transliteration-skeleton match (``raktha vajram`` == ``rakta vajram``),
+  4. fuzzy candidates: shared trigrams -> bounded OSA edit distance.
 The planner (not this module) decides whether a fuzzy candidate may be auto-corrected.
 """
 
@@ -20,7 +21,9 @@ from datetime import date
 from typing import Any, Iterable
 
 from app.text import normalize, osa_distance, singularize, trigrams
-from app.vocab import CONTENT_TYPE_WORDS, GENRE_SYNONYMS, LANGUAGE_ALIASES, NOISE
+from app.vocab import (CONTENT_TYPE_WORDS, GENRE_SYNONYMS, LANGUAGE_ALIASES, NOISE,
+                       TITLE_REQUEST_CUES, EXPLICIT_PERSON_SLOTS, NARRATIVE_TITLE_BLOCKERS,
+                       CATALOG_MARKERS, SORT_LATEST, SORT_OLDEST)
 
 KIND_PRIORITY = {"title": 0, "actor": 1, "director": 2, "character": 3, "genre": 4, "theme": 5, "language": 6, "content_type": 7}
 FUZZY_KINDS = ("title", "actor", "director", "character")
@@ -70,7 +73,7 @@ class Span:
     end: int                           # token index, exclusive
     phrase: str
     entities: list[Entity]
-    match: str = "exact"               # exact | skeleton
+    match: str = "exact"               # exact | title_fragment | skeleton
     @property
     def length(self) -> int:
         return self.end - self.start
@@ -132,6 +135,8 @@ class Catalog:
         self.tri: dict[str, set[int]] = defaultdict(set)
         self.fuzzy_keys: list[tuple[str, Entity]] = []
         self.title_assets: dict[str, set[str]] = defaultdict(set)       # title/alias norm -> asset keys
+        self.title_words: dict[str, set[str]] = defaultdict(set)
+        self.title_entities: dict[str, Entity] = {}
         self.actor_assets: dict[str, set[str]] = defaultdict(set)
         self.character_assets: dict[str, set[str]] = defaultdict(set)
         self.director_assets: dict[str, set[str]] = defaultdict(set)
@@ -194,6 +199,9 @@ class Catalog:
             self.type_assets[a.content_type].add(a.asset_key)
             self.title_assets[a.title_norm].add(a.asset_key)
             te = Entity("title", a.title, a.title_norm)
+            self.title_entities[a.title_norm] = te
+            for word in set(a.title_norm.split()):
+                self.title_words[word].add(a.title_norm)
             self._add(a.title_norm, te, True)
             bare = _strip_article(a.title_norm)
             if bare != a.title_norm and len(bare) >= 3:
@@ -274,6 +282,63 @@ class Catalog:
     def partial_entities(self, word: str) -> list[Entity]:
         return sorted(self._partials.get(word, ()), key=lambda e: (e.kind, e.norm))
 
+    def _title_fragment(self, tokens: list[str], start: int, end: int, existing: list[Entity]) -> list[Entity]:
+        """Indexed whole-word title fragments, guarded by request context.
+
+        No movie-specific rules or full-catalog request scan. Query tokens select
+        posting lists; only their intersection is checked for contiguous wording.
+        Explicit person slots and known category requests retain their meaning.
+        """
+        if any(e.kind == 'title' for e in existing):
+            return []  # Exact title always wins over longer partial title matches.
+        words = tokens[start:end]
+        phrase = ' '.join(words)
+        before = tokens[start-1] if start else ''
+        if before in EXPLICIT_PERSON_SLOTS:
+            return []
+        outside = tokens[:start]+tokens[end:]
+        if any(t in NARRATIVE_TITLE_BLOCKERS for t in outside):
+            return []
+        explicit = any(t in TITLE_REQUEST_CUES for t in tokens[:start])
+        if not explicit:
+            if len(phrase) < 4 or not any(t.isalpha() for t in words):
+                return []
+            if any(e.kind in {'genre','theme','language','content_type'} for e in existing):
+                return []
+            significant = [w for w in words if w not in NOISE]
+            # A known person name is already an entity candidate, not an ordinary
+            # plot word. Its frequency must not let a character override a title.
+            named = any(e.kind in {'actor','director','character'} for e in existing)
+            common = any(self.df(w)/self.doc_total >= .05 and self.df(w) > len(self.title_words[w])
+                         for w in significant)
+            if not significant or (common and not named):
+                return []
+        # Remaining words must be request grammar or recognized structured facets,
+        # rather than an ordinary plot description containing a title word.
+        sort_words = {word for cue in SORT_LATEST+SORT_OLDEST for word in cue}
+        fragment_indexes = set(range(start,end))
+        covered = {i for i,t in enumerate(tokens) if i in fragment_indexes or t in NOISE
+                   or t in CONTENT_TYPE_WORDS or t in CATALOG_MARKERS or t in TITLE_REQUEST_CUES or t in sort_words}
+        for i in range(len(tokens)):
+            if i in covered:
+                continue
+            for length in range(min(self.max_words,len(tokens)-i),0,-1):
+                inds=set(range(i,i+length))
+                if inds & fragment_indexes:
+                    continue
+                if any(e.kind in {'actor','director','character','genre','theme','language','content_type'}
+                       for e in self.entities_for(' '.join(tokens[i:i+length]))):
+                    covered |= inds
+                    break
+        if len(covered) != len(tokens):
+            return []
+        postings = [self.title_words.get(word,set()) for word in words]
+        if not postings or any(not p for p in postings):
+            return []
+        matching = set.intersection(*sorted(postings,key=len))
+        return [self.title_entities[n] for n in sorted(matching)
+                if f' {phrase} ' in f' {n} ']
+
     def find_spans(self, tokens: list[str]) -> list[Span]:
         spans: list[Span] = []
         n = len(tokens)
@@ -288,6 +353,11 @@ class Catalog:
                                 or (i == 0 and length == n and length > 1)):
                     spans.append(Span(i, i+length, phrase, list(guarded)))
                 ents = self.entities_for(phrase)
+                fragments = (self._title_fragment(tokens,i,i+length,ents)
+                             if all(w in self.title_words for w in tokens[i:i+length]) else [])
+                if fragments:
+                    spans.append(Span(i,i+length,phrase,fragments+ents,match='title_fragment'))
+                    continue
                 if ents:
                     spans.append(Span(i, i + length, phrase, ents))
                     continue
@@ -350,7 +420,7 @@ class Catalog:
     def assets_for(self, ent: Entity) -> set[str]:
         k, n = ent.kind, ent.norm
         if k == "title":
-            return set(self.title_assets.get(n, ())) | {key for key, a in self.assets.items() if a.title_norm == n}
+            return set(self.title_assets.get(n, ()))
         if k == "actor":
             return set(self.actor_assets.get(n, ()))
         if k == "director":

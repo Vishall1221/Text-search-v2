@@ -134,3 +134,28 @@ async def test_api_metadata_contract_and_invalid_inputs(database,monkeypatch):
             for payload in [{'query':' '},{'query':'x'*501},{'query':'movies','limit':0}]:
                 assert (await client.post('/api/search',json=payload)).status_code==422
             assert (await client.get('/')).status_code==200
+
+
+async def test_api_partial_titles_beat_incidental_character_names(database,monkeypatch):
+    import app.api as api
+    path,_=database
+    records=sources()[:3]
+    examples=[('Parasakthi - Uncesored Version',None),('Parimala and Co','Parasakthi'),
+              ('Inthi Ninna Preethiya','Parimala')]
+    for row,(title,character) in zip(records,examples):
+        row['title']=title
+        row['primary_cast'][0]['character_name']=character
+    path.write_text(json.dumps(records),encoding='utf-8')
+    await asyncio.to_thread(ingest,path,url=URL,embedder=HashEmbedder())
+    monkeypatch.setattr(api,'load_embedder',lambda:HashEmbedder())
+    async with api.app.router.lifespan_context(api.app):
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=api.app),base_url='http://test') as client:
+            for query,key in [('parasakthi','F1'),('parimala','F2'),('Parimala and Co','F2'),
+                              ('Ninna Preethiya','F3'),('movies with character Parimala','F3')]:
+                response=await client.post('/api/search',json={'query':query,'debug':True})
+                assert response.status_code==200,response.text
+                result=response.json()
+                assert result['status'] in {'ok','approximate'},result
+                if not query.startswith('movies with character'):
+                    assert result['status']=='ok',result
+                assert [row['show_id'] for row in result['results']]==[key],result

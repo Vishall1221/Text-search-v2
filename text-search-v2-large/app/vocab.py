@@ -8,6 +8,11 @@ Edit this file and restart the app; no JSON synonym registry or loader is used.
 
 from __future__ import annotations
 
+# Grammar for title/person intent; actual matching names always come from the catalog.
+TITLE_REQUEST_CUES = {'play', 'watch', 'title', 'titled'}
+EXPLICIT_PERSON_SLOTS = {'starring', 'featuring', 'actor', 'actress', 'character', 'director', 'directed', 'by', 'with'}
+NARRATIVE_TITLE_BLOCKERS = {'about', 'where', 'whose', 'that', 'named'}
+
 
 # --- genre synonyms (single definition source) --------------------------------------
 GENRE_SYNONYMS = {'family': {'family', 'family oriented', 'family drama'},

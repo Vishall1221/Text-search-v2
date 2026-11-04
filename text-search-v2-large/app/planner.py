@@ -230,7 +230,7 @@ def select_spans(tokens: list[str], catalog: Catalog, whole_query_ok: bool,
             words = [w for w in sp.phrase.split() if w not in {"the", "a", "an"}]
             distinctive = len(words) >= 2 and all(
                 catalog.df(w) / catalog.doc_total < 0.05 for w in words if not w.isdigit())
-            if not request_only and not explicit and not distinctive:
+            if not request_only and not explicit and not distinctive and sp.match != 'title_fragment':
                 kept = [e for e in kept if e.kind != "title"]
         if not kept:
             continue
@@ -455,6 +455,8 @@ def _analyze(tokens: list[str], quoted: list[str], catalog: Catalog, plan: Plan,
         previous_kind[kind] = (facet_index, sp)
         if sp.match == "skeleton":
             plan.trace.append(f"transliteration match '{sp.phrase}' -> {ent[0].canonical}")
+        elif sp.match == 'title_fragment' and kind == 'title':
+            plan.trace.append(f"title fragment '{sp.phrase}' -> " + ', '.join(e.canonical for e in ent))
         prev_span = sp
     # --- spelling ----------------------------------------------------------------------------
     unresolved = _unresolved_runs(tokens, consumed, catalog)

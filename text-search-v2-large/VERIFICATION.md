@@ -108,3 +108,29 @@ restart the app; no database reimport is needed.
 
 The vocab.py-only version passed the full **94 Python tests**, including
 PostgreSQL integration and real BGE, on 4 November 2026.
+
+## Indexed title-priority correction
+
+Reproduced the reported short-title/character collision with constructed fixtures:
+`parasakthi` selected a film containing that character rather than the longer
+matching title, and `parimala` had the same failure. Seven initial unit cases failed
+before the correction. The example names occur only in tests, not application rules.
+
+The catalog now builds a word-to-title posting index alongside its existing exact
+index. Request-context checks admit contiguous whole-word title fragments for
+concise title/listing requests. Complete titles still take precedence. Fragment
+titles outrank incidental person-name matches; explicit person cues, category
+requests and narrative descriptions retain their meaning. A frequency guard cannot
+demote a known character-name collision, and words occurring only in their matching
+titles are not classified as generic simply because a test catalog is small.
+
+**112 Python tests passed**, including 14 PostgreSQL cases and real BGE import/reuse,
+plus **2 JavaScript UI tests**, on 4 November 2026. The added tests cover both reported
+examples through the actual API, full-title precedence, multiple matching titles,
+middle-of-title fragments, contiguous word boundaries, frequent character names,
+explicit person requests and genre/narrative negatives. A guarded asset dictionary
+raises on iteration to verify title lookup uses postings, not an asset scan.
+
+The actual Mac catalog remains unavailable here. These are regression fixtures,
+not real-catalog relevance measurements. Existing scale timings above predate this
+correction and were not remeasured. No table, importer or vector changes are needed.
