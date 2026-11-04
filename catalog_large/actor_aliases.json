@@ -1,0 +1,15 @@
+{
+  "_note": "Editable actor/actress search labels, not biographical assertions. Only exact catalog_names activate a group. Role-based labels are user-supplied and must be maintained when roles change.",
+  "actors": [
+    {"catalog_names": ["Vijay", "Joseph Vijay", "C. Joseph Vijay"], "aliases": ["Thalapathy", "Thalapthy", "Ilaya Thalapathy", "Ilai Thalapathy", "Illai Thalapathy", "Ilayathalapathy"], "provenance": "user_requested"},
+    {"catalog_names": ["Vijay", "Joseph Vijay", "C. Joseph Vijay"], "aliases": ["CM of Tamilnadu", "CM of Tamil Nadu", "Chief Minister of Tamil Nadu"], "requires_context": true, "provenance": "user_custom_role_label", "note": "Requested custom search mapping; not verified as a current officeholder. Review or remove when inappropriate."},
+    {"catalog_names": ["Vadivelu"], "aliases": ["Vaigai Puyal", "Vaigaipuyal"], "provenance": "user_requested"},
+    {"catalog_names": ["Suriya", "Surya", "Suriya Sivakumar"], "aliases": ["Nadippin Nayagan", "Nadippu Nayagan", "Nadipu Nayagan", "Nadippin Naayagan"], "provenance": "user_requested"},
+    {"catalog_names": ["Salman Khan"], "aliases": ["Salman Bhai", "Sallu Bhai", "Sallu", "Tiger of Bollywood"], "provenance": "user_requested"},
+    {"catalog_names": ["Rajinikanth", "Rajnikanth"], "aliases": ["Thalaivar"], "provenance": "curated_search_label"},
+    {"catalog_names": ["Rajinikanth", "Rajnikanth"], "aliases": ["Superstar"], "requires_context": true, "provenance": "curated_search_label"},
+    {"catalog_names": ["Kamal Haasan", "Kamal Hassan"], "aliases": ["Ulaganayagan", "Ulaga Nayagan"], "provenance": "curated_search_label"},
+    {"catalog_names": ["Shah Rukh Khan", "Shahrukh Khan"], "aliases": ["SRK", "King Khan"], "provenance": "curated_search_label"},
+    {"catalog_names": ["Nayanthara", "Nayantara"], "aliases": ["Lady Superstar"], "requires_context": true, "provenance": "curated_search_label"}
+  ]
+}

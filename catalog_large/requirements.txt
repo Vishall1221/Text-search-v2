@@ -1,0 +1,6 @@
+# Ingestion-only dependencies; existing V2 runtime environments can also be used.
+psycopg[binary]==3.3.6
+numpy>=1.26
+python-dotenv>=1.0
+tokenizers>=0.15
+onnxruntime>=1.17

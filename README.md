@@ -4,12 +4,55 @@ English movie search for titles, actors, genres, storylines, scenes and dialogue
 Combines PostgreSQL full-text search with dense vector retrieval and weighted reciprocal rank fusion.
 There is no LLM in the normal request path. Native PostgreSQL full-text ranking is not BM25.
 
-This repository contains the runtime application and setup tools. Development tests, evaluation/demo
-query sets, agent handoff documents, model binaries, movie exports and machine-local configuration
-are deliberately excluded.
+This repository contains the runtime application, setup tools and a standalone catalog-only
+importer. Focused importer tests are included; the original development suite, evaluation query
+sets, agent handoff documents, model binaries, movie exports and machine-local configuration
+are excluded.
 
 **Already running V1 on a Mac? Follow [MAC.md](MAC.md).** Reuse the existing PostgreSQL server and
 database; V2 manages its own `search_v2` schema and does not modify V1's original tables.
+
+## Catalog-only JSON import: schema_v2_large
+
+For approximately 2,000 movie metadata records without scenes or transcripts, see
+**[the catalog-only Mac guide](catalog_large/mac.md)**. This separate importer
+creates six tables in `schema_v2_large` in your existing database. It preserves
+primary language separately from available audio tracks, primary/supporting cast
+relationships, themes and actor/actress aliases. `released_date` means ZEE5 arrival
+for this importer; genuine original release dates remain separate.
+
+From the repository root, after configuring your existing database connection:
+
+```bash
+python3 -m venv .venv-large
+source .venv-large/bin/activate
+python -m pip install -r catalog_large/requirements.txt
+export LARGE_DATABASE_URL='postgresql://YOUR_USER:YOUR_PASSWORD@127.0.0.1:5432/YOUR_DATABASE'
+export EMBED_MODEL=bge-small-en-v1.5
+export MODELS_DIR="$PWD/models"
+MOVIES_JSON="set custom path"
+python -m catalog_large.ingest --data "$MOVIES_JSON" --dry-run
+python -m scripts.download_model bge-small-en-v1.5
+python -m catalog_large.ingest --data "$MOVIES_JSON"
+```
+
+Replace the connection and JSON path; PostgreSQL must be running with pgvector
+already enabled. Omit a password segment when your connection does not require it.
+Imports build embeddings by default; `--lexical-only` leaves vectors NULL.
+Each import is a complete replacement snapshot; `--no-activate`, `--activate ID`
+and `--rollback` support controlled publication. No scene or playback data is required.
+
+Edit [actor_aliases.json](catalog_large/actor_aliases.json) for nicknames. Only
+exact actor names present in the supplied cast activate a group. No movie aliases
+are imported. The module does not change query matching, the API or `search_v2`.
+
+Focused tests (database cases skip unless a disposable `LARGE_TEST_DATABASE_URL`
+is set; those tests reset `schema_v2_large` in that test database):
+
+```bash
+python -m pip install -r catalog_large/requirements-test.txt
+python -m pytest -c catalog_large/pytest.ini
+```
 
 ## Requirements
 
@@ -139,6 +182,7 @@ config/      settings, import profile, aliases, .env.example
 db/          V2 schema
 frontend/    static HTML, CSS and JavaScript
 scripts/     model downloader
+catalog_large/ standalone catalog importer, schema, actor aliases, tests and Mac guide
 README.md    runtime setup and architecture
 MAC.md       setup for a Mac with working V1
 ```

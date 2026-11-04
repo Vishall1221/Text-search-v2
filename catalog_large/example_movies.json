@@ -1,0 +1,16 @@
+[
+  {
+    "show_id": "example-001",
+    "title": "Example Rescue Story",
+    "content_type": "movie",
+    "plot_summary": "A detective searches for a kidnapped child.",
+    "themes": ["Family", "Rescue"],
+    "primary_cast": [{"actor_name": "Vijay", "character_name": "Arun"}],
+    "supporting_cast": [{"actor_name": "Vadivelu", "character_name": null}],
+    "director_name": null,
+    "primary_language": "Tamil",
+    "AudioLanguages": ["Tamil", "Hindi", "Telugu"],
+    "genre": "Action",
+    "released_date": "2021-11-28"
+  }
+]

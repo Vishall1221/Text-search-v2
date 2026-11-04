@@ -1,5 +1,6 @@
 # Local environments, configuration, credentials and generated files
 .venv/
+.venv-large/
 venv/
 __pycache__/
 *.pyc
@@ -30,3 +31,8 @@ CHATGPT.md
 gpt.md
 GPT.md
 FIX_VERIFICATION.md
+
+# Focused tests for the standalone catalog importer are included.
+!catalog_large/tests/
+!catalog_large/tests/*.py
+!catalog_large/pytest.ini

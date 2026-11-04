@@ -1,5 +1,10 @@
 # V2 on the Mac where V1 already works
 
+For the new **catalog-only importer into `schema_v2_large`**, use
+[catalog_large/mac.md](catalog_large/mac.md). It supports movie metadata, actor
+aliases, dubbed audio languages and optional embeddings. It does not switch the
+existing search API to the new schema. The instructions below are for original V2.
+
 **Reuse your existing PostgreSQL server, database and login. You do not need to reinstall PostgreSQL,
 create another database/user, or change V1's tables.**
 
