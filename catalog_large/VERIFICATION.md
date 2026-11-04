@@ -44,3 +44,13 @@ test used two records and does not establish full-corpus embedding performance.
 No application database import, production relevance benchmark or Mac execution
 was performed. Existing `search_v2`, original catalog tables and V1 are unchanged.
 The isolated review cluster was stopped after verification.
+
+## Optional primary-language fix (4 November 2026)
+
+Primary language is now optional and remains NULL when absent. Both audio field
+spellings are preserved without guessing an original language. DDL upgrades the
+initial NOT NULL constraint automatically. Additional regressions cover missing,
+null and blank values, 2,000 audio-only records and an existing initial schema.
+
+The updated publish checkout passed all **28 focused tests**, including real
+BGE, on Windows with the disposable review database.

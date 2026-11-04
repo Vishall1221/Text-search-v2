@@ -100,9 +100,10 @@ def ingest(data, *, url=None, aliases_file=DEFAULT_ALIASES, dry_run=False, lexic
               'alias_groups_absent_from_cast': sorted(set(skipped)),
               'missing_plot': sum(not m['plot_summary'] for m in movies),
               'missing_audio_languages': sum(not m['audio_languages'] for m in movies),
+              'missing_primary_language': sum(m['primary_language'] is None for m in movies),
               'missing_original_release_date': sum(m['original_release_date'] is None for m in movies),
               'released_date_kind': released_date_kind,
-              'primary_languages': sorted({m['primary_language'] for m in movies}),
+              'primary_languages': sorted({m['primary_language'] for m in movies if m['primary_language']}),
               'full_snapshot_replacement': True}
     if dry_run:
         report.update(dry_run=True, validation='passed; no database or model accessed')

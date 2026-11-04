@@ -42,7 +42,11 @@ def test_2000_movie_import_fts_aliases_and_schema_isolation(tmp_path):
             c.execute(f'CREATE TABLE IF NOT EXISTS {schema}.large_import_sentinel(value text)')
             c.execute(f'DELETE FROM {schema}.large_import_sentinel')
             c.execute(f"INSERT INTO {schema}.large_import_sentinel VALUES('preserved')")
-    report = ingest(write(tmp_path, [movie(f'M{i}') for i in range(2000)]), url=URL, lexical_only=True)
+    rows = [movie(f'M{i}') for i in range(2000)]
+    for row in rows:
+        row.pop('primary_language')
+        row['audio_languages'] = row.pop('AudioLanguages')
+    report = ingest(write(tmp_path, rows), url=URL, lexical_only=True)
     assert report['assets'] == report['documents'] == 2000
     assert report['activated'] and report['embedded'] == 0
     assert q("SELECT count(*) FROM information_schema.tables WHERE table_schema='schema_v2_large'") == [(6,)]
@@ -50,7 +54,7 @@ def test_2000_movie_import_fts_aliases_and_schema_isolation(tmp_path):
     assert q("SELECT count(*) FROM schema_v2_large.search_doc WHERE tsv_main @@ plainto_tsquery('english','kidnapping child')") == [(2000,)]
     assert q("SELECT DISTINCT actor_name FROM schema_v2_large.alias_snapshot WHERE alias_norm='thalapathy'") == [('Vijay',)]
     assert q("SELECT count(*) FROM schema_v2_large.alias_snapshot WHERE entity_kind<>'actor'") == [(0,)]
-    assert q("SELECT count(*) FROM schema_v2_large.asset_snapshot WHERE 'HINDI'=ANY(audio_languages) AND primary_language='TAMIL'") == [(2000,)]
+    assert q("SELECT count(*) FROM schema_v2_large.asset_snapshot WHERE 'HINDI'=ANY(audio_languages) AND primary_language IS NULL") == [(2000,)]
     assert q('SELECT count(*) FROM schema_v2_large.asset_snapshot WHERE original_release_date IS NOT NULL') == [(0,)]
     for schema in ('public','search_v2'):
         assert q(f'SELECT value FROM {schema}.large_import_sentinel') == [('preserved',)]
@@ -102,7 +106,7 @@ def test_failed_embedding_build_preserves_live_snapshot(tmp_path):
 
 def test_invalid_input_cannot_create_schema(tmp_path):
     broken = movie()
-    broken.pop('primary_language')
+    broken.pop('show_id')
     with pytest.raises(ValueError):
         ingest(write(tmp_path, [broken]), url=URL, lexical_only=True)
     assert q("SELECT to_regnamespace('schema_v2_large')") == [(None,)]
@@ -120,3 +124,16 @@ def test_real_bge_vectors_reuse_and_model_safe_passages(tmp_path):
     second = ingest(path, url=URL, embedder=encoder)
     assert second['embedded'] == 0 and second['reused'] == 2
     assert second['max_tokens'] <= 384
+
+
+def test_missing_primary_language_upgrades_initial_schema(tmp_path):
+    from catalog_large.ingest import initialize
+    with psycopg.connect(URL) as c:
+        initialize(c)
+        c.execute('ALTER TABLE schema_v2_large.asset_snapshot ALTER COLUMN primary_language SET NOT NULL')
+    raw = movie()
+    raw.pop('primary_language')
+    raw['audio_languages'] = raw.pop('AudioLanguages')
+    result = ingest(write(tmp_path, [raw]), url=URL, lexical_only=True)
+    assert result['missing_primary_language'] == 1
+    assert q('SELECT primary_language,audio_languages FROM schema_v2_large.asset_snapshot') == [(None,['TAMIL','HINDI'])]

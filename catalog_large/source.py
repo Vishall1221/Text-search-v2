@@ -100,7 +100,10 @@ def normalize_movie(raw, filename, released_date_kind='platform'):
         'plot_summary': text(raw.get('plot_summary'), 'plot_summary'),
         'themes': strings(raw.get('themes'), 'themes'),
         'genres': genres, 'genres_norm': [normalize(g) for g in genres],
-        'primary_language': language(raw.get('primary_language')),
+        'primary_language': (language(raw['primary_language'])
+                             if raw.get('primary_language') not in (None, '')
+                             and not (isinstance(raw['primary_language'], str) and not raw['primary_language'].strip())
+                             else None),
         'audio_languages': list(dict.fromkeys(language(v) for v in strings(
             raw.get('audio_languages', raw.get('AudioLanguages')), 'audio_languages'))),
         'primary_cast': primary, 'supporting_cast': supporting,

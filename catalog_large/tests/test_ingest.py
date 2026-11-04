@@ -44,8 +44,9 @@ def test_audio_string_and_no_inference_from_audio():
     raw['AudioLanguages'] = 'Tamil, Hindi | Telugu; Tamil'
     assert normalize_movie(raw, 'x')['audio_languages'] == ['TAMIL','HINDI','TELUGU']
     del raw['primary_language']
-    with pytest.raises(ValueError, match='language'):
-        normalize_movie(raw, 'x')
+    m = normalize_movie(raw, 'x')
+    assert m['primary_language'] is None
+    assert m['audio_languages'] == ['TAMIL','HINDI','TELUGU']
 
 
 def test_missing_optional_metadata_is_not_invented():
@@ -86,7 +87,7 @@ def test_json_containers_and_utf8_bom(tmp_path, container):
 
 
 def test_full_validation_collects_errors_and_rejects_duplicate_ids(tmp_path):
-    rows = [movie(), movie(), {**movie('M2'), 'primary_language': None}]
+    rows = [movie(), movie(), {**movie('M2'), 'title': None}]
     with pytest.raises(ValueError) as exc:
         read_movies(write(tmp_path, rows))
     assert 'duplicate show_id' in str(exc.value) and 'record 3' in str(exc.value)
@@ -140,7 +141,22 @@ def test_catalog_only_passages_include_themes_and_fit_budget():
 
 
 def test_2000_movie_dry_run_needs_no_model_or_database(tmp_path):
-    path = write(tmp_path, [movie(f'M{i}') for i in range(2000)])
+    rows = [movie(f'M{i}') for i in range(2000)]
+    for row in rows:
+        row.pop('primary_language')
+    path = write(tmp_path, rows)
     result = ingest(path, dry_run=True, url='invalid://must-not-connect')
     assert result['assets'] == 2000 and result['dry_run']
     assert result['aliases'] > 0 and result['released_date_kind'] == 'platform'
+    assert result['missing_primary_language'] == 2000
+
+
+@pytest.mark.parametrize('primary', [None, '', '   '])
+def test_unknown_primary_language_is_reported_not_inferred(tmp_path, primary):
+    raw = movie()
+    raw['primary_language'] = primary
+    raw['audio_languages'] = raw.pop('AudioLanguages')
+    report = ingest(write(tmp_path, [raw]), dry_run=True)
+    assert report['missing_primary_language'] == 1
+    assert report['primary_languages'] == []
+    assert report['missing_audio_languages'] == 0

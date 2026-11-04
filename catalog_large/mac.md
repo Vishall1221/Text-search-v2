@@ -74,8 +74,10 @@ a folder of `.json` files. Folder imports read all top-level JSON files, so keep
 alias/config files outside that data folder. All movies are validated before
 database writes. UTF-8 and UTF-8 with BOM are accepted.
 
-Required fields: `show_id`, `title`, `content_type`, `primary_language`. Metadata
-that is unknown may be null/absent. Each show_id must be unique across the entire
+Required fields: `show_id`, `title`, `content_type`. `primary_language` is optional:
+if absent, null or blank, it is stored as NULL and reported by the dry run.
+Available audio languages are preserved; primary language is never inferred from
+the first audio track. Other unknown metadata may also be null/absent. Each show_id must be unique across the entire
 input. Put multiple dubbed tracks in `AudioLanguages`/`audio_languages`; do not
 duplicate the movie record for each track. Lists are preferred; comma/semicolon/
 pipe/slash-separated strings are also accepted for languages/genres/directors.

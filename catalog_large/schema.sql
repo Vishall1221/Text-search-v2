@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS schema_v2_large.asset_snapshot (
     themes TEXT[] NOT NULL DEFAULT '{}',
     genres TEXT[] NOT NULL DEFAULT '{}',
     genres_norm TEXT[] NOT NULL DEFAULT '{}',
-    primary_language TEXT NOT NULL CHECK (primary_language<>''),
+    primary_language TEXT CHECK (primary_language<>''),
     audio_languages TEXT[] NOT NULL DEFAULT '{}',
     primary_cast JSONB NOT NULL DEFAULT '[]' CHECK (jsonb_typeof(primary_cast)='array'),
     supporting_cast JSONB NOT NULL DEFAULT '[]' CHECK (jsonb_typeof(supporting_cast)='array'),
@@ -54,6 +54,9 @@ CREATE TABLE IF NOT EXISTS schema_v2_large.asset_snapshot (
     ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (generation_id,show_id)
 );
+-- Upgrade tables created by the initial importer. Unknown is NULL, never an audio-track guess.
+ALTER TABLE schema_v2_large.asset_snapshot ALTER COLUMN primary_language DROP NOT NULL;
+
 -- Nicknames refer ONLY to actors/actresses found in this generation's cast.
 -- No movie aliases and no substring matching of canonical actor names.
 CREATE TABLE IF NOT EXISTS schema_v2_large.alias_snapshot (
